@@ -190,7 +190,7 @@
         <a href="#" class="m-cta-btn m-cta-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 點此致電徐先生</a>
     </div>
 
-    <script>
+<script>
         // 1. 讀取並渲染基本聯絡資訊 + 核心工程服務欄位
         fetch('/data/settings.json')
             .then(res => res.json())
@@ -232,13 +232,22 @@
                 }
             }).catch(err => console.log("使用預設基本資料"));
 
-        // 2. 終極動態案例撈取（同時支援後台產出的 .md 與 .json 檔案解析）
+        // 2. 終極動態案例撈取（安全防護完全體）
         fetch('https://api.github.com/repos/twquanjing/twquanjing.github.io/contents/data/cases')
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error('尚未建立案例資料夾');
+                return res.json();
+            })
             .then(files => {
-                if (!Array.isArray(files)) return;
                 const container = document.getElementById('cases-container');
-                container.innerHTML = ''; // 清空加載字樣
+                if (!container) return;
+                
+                if (!Array.isArray(files) || files.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">目前尚無施工案例，請至後台新增！</p>';
+                    return;
+                }
+                
+                container.innerHTML = ''; // 確定有檔案，清空「載入中」字樣
 
                 files.forEach(file => {
                     if (file.name.endsWith('.json') || file.name.endsWith('.md')) {
@@ -265,7 +274,7 @@
                                     if (descMatch) description = descMatch[1];
                                 }
 
-                                if (image) {
+                                if (image && document.getElementById('cases-container')) {
                                     const card = document.createElement('div');
                                     card.className = 'gallery-item';
                                     card.innerHTML = `
@@ -273,14 +282,19 @@
                                         <img src="${image}" alt="${tag}" onerror="this.src='https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80'">
                                         <p style="margin-top: 10px; font-weight: bold; color: #333;">${description}</p>
                                     `;
-                                    container.appendChild(card);
+                                    document.getElementById('cases-container').appendChild(card);
                                 }
                             });
+                    }
+                });
+            }).catch(err => {
+                // ✨ 核心修正：加入安全檢查，確保容器存在才塞入文字，且加上 grid-column 撐滿排版
+                console.log("撈取提示:", err.message);
+                const container = document.getElementById('cases-container');
+                if (container) {
+                    container.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1/-1;">目前尚無施工案例，請至後台新增！</p>';
                 }
             });
-        }).catch(err => {
-            document.getElementById('cases-container').innerHTML = '<p style="text-align:center; color:#999;">目前尚無施工案例，請至後台新增！</p>';
-        });
     </script>
 </body>
 </html>
