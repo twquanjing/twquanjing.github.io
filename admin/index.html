@@ -12,8 +12,21 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (window.netlifyIdentity) {
+        // 1. 初始化 Netlify 連線
         window.netlifyIdentity.init({
           APIUrl: 'https://calm-tarsier-bd25df.netlify.app/.netlify/identity'
+        });
+
+        // 2. ✨ 核心追加：當 Google 登入成功時，立刻關閉視窗，並強行定錨在後台介面！
+        window.netlifyIdentity.on('login', () => {
+          window.netlifyIdentity.close();
+          // 如果網址後面沒有 /#/，強制幫他加上去，直接發動後台管理系統
+          if (!window.location.hash || window.location.hash === '#') {
+            window.location.href = 'https://twquanjing.github.io/admin/#/';
+          } else {
+            // 如果已經有雜湊值，直接重新整理刷新狀態
+            window.location.reload();
+          }
         });
       }
     });
