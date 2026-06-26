@@ -10,23 +10,103 @@
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
   <script>
+    // 必須在 CMS 初始化之前註冊語系
+    if (window.CMS) {
+      window.CMS.registerLocale('zh_TW', {
+        auth: {
+          login: '登入',
+          loggingIn: '登入中...',
+          loginWithNetlifyIdentity: '使用 Netlify Identity 登入',
+          loginWithProviders: '使用其他方式登入',
+        },
+        app: {
+          header: {
+            quickAdd: '快速新增',
+          },
+          sidebar: {
+            collections: '內容管理',
+            allCollections: '所有分類',
+            search: '搜尋...',
+            settings: '設定',
+          },
+          workflow: {
+            workflow: '工作流程',
+          },
+        },
+        collection: {
+          sidebar: {
+            collections: '分類',
+            search: '搜尋文章...',
+          },
+          collectionTop: {
+            sortBy: '排序依據',
+            viewAs: '瀏覽視態',
+          },
+          entries: {
+            emptyCollection: '此分類目前沒有資料',
+            loadingEntries: '正在載入資料...',
+          },
+        },
+        editor: {
+          editorWidgets: {
+            markdown: {
+              richText: '富文本',
+              markdown: 'Markdown 語法',
+            },
+          },
+          editorInterface: {
+            toggleFolder: '切換資料夾',
+          },
+          editorToolbar: {
+            publishing: '發布中...',
+            publish: '發布變更',
+            published: '已發布',
+            save: '儲存暫存',
+            saving: '儲存中...',
+            setStatus: '設定狀態',
+          },
+          editorCard: {
+            draft: '草稿',
+          },
+        },
+        mediaLibrary: {
+          mediaLibraryCard: {
+            key: '鍵值: ',
+          },
+          mediaLibrary: {
+            mediaLibrary: '媒體庫',
+            upload: '上傳新照片',
+            uploading: '上傳中...',
+            search: '搜尋照片...',
+            copyLink: '複製連結',
+            fileTooLarge: '檔案太大了。',
+          },
+        },
+      });
+    }
+  </script>
+
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (window.netlifyIdentity) {
-        // 1. 初始化 Netlify 連線
+        // 初始化 Netlify 連線
         window.netlifyIdentity.init({
           APIUrl: 'https://calm-tarsier-bd25df.netlify.app/.netlify/identity'
         });
 
-        // 2. ✨ 核心追加：當 Google 登入成功時，立刻關閉視窗，並強行定錨在後台介面！
+        // 當 Google 登入成功時，強行定錨在後台介面
         window.netlifyIdentity.on('login', () => {
           window.netlifyIdentity.close();
-          // 如果網址後面沒有 /#/，強制幫他加上去，直接發動後台管理系統
           if (!window.location.hash || window.location.hash === '#') {
             window.location.href = 'https://twquanjing.github.io/admin/#/';
           } else {
-            // 如果已經有雜湊值，直接重新整理刷新狀態
             window.location.reload();
           }
+        });
+
+        // 當管理者點擊「登出」時，自動退回前台官網大門
+        window.netlifyIdentity.on('logout', () => {
+          window.location.href = 'https://twquanjing.github.io/';
         });
       }
     });
