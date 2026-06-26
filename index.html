@@ -189,28 +189,56 @@
         <a href="#" class="m-cta-btn m-cta-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 點此致電徐先生</a>
     </div>
 
-    <script>
-        // 1. 讀取並渲染基本聯絡資訊
-        fetch('/data/settings.json')
-            .then(res => res.json())
-            .then(data => {
-                if(data.hero_title) document.getElementById('hero-title').innerText = data.hero_title;
-                if(data.hero_desc) document.getElementById('hero-desc').innerText = data.hero_desc;
-                if(data.email) document.getElementById('info-email').innerText = data.email;
-                if(data.address) document.getElementById('info-address').innerText = data.address + " (全台皆有團隊服務)";
-                
-                // 綁定 LINE 與 電話
-                if(data.line_url) {
-                    document.querySelectorAll('.dynamic-line').forEach(el => el.href = data.line_url);
-                }
-                if(data.phone_number) {
-                    document.querySelectorAll('.dynamic-phone').forEach(el => el.href = "tel:" + data.phone_number);
-                }
-            }).catch(err => console.log("使用預設基本資料"));
+   <script>
+    // 1. 讀取並渲染基本聯絡資訊
+    fetch('/data/settings.json')
+        .then(res => res.json())
+        .then(data => {
+            if(data.hero_title) document.getElementById('hero-title').innerText = data.hero_title;
+            if(data.hero_desc) document.getElementById('hero-desc').innerText = data.hero_desc;
+            if(data.email) document.getElementById('info-email').innerText = data.email;
+            if(data.address) document.getElementById('info-address').innerText = data.address + " (全台皆有團隊服務)";
+            
+            if(data.line_url) {
+                document.querySelectorAll('.dynamic-line').forEach(el => el.href = data.line_url);
+            }
+            if(data.phone_number) {
+                document.querySelectorAll('.dynamic-phone').forEach(el => el.href = "tel:" + data.phone_number);
+            }
+        }).catch(err => console.log("使用預設基本資料"));
 
-        // 2. 讀取並動態渲染施工案例（自動依照 GitHub 檔案排序）
-        // 實務上會從由 Decap CMS 建立的 data/cases 目錄讀取，這裡使用動態抓取邏輯
-        // 為了確保不報錯，我們建立一個基礎容器。當後台開始產出檔案時，即可無縫渲染。
-    </script>
+    // 2. ✨ 自動撈取 Decap CMS 上傳的施工案例並顯示在前台
+    // 透過 GitHub API 自動讀取 data/cases 資料夾下的所有 JSON 檔案
+    fetch('https://api.github.com/repos/twquanjing/twquanjing.github.io/contents/data/cases')
+        .then(res => res.json())
+        .then(files => {
+            if (!Array.isArray(files)) return;
+            
+            // 過濾出所有的 json 檔案
+            const jsonFiles = files.filter(f => f.name.endsWith('.json'));
+            const container = document.getElementById('cases-container');
+            container.innerHTML = ''; // 清空載入中字樣
+
+            // 依序讀取每個案例的內容
+            jsonFiles.forEach(file => {
+                fetch(file.download_url)
+                    .then(res => res.json())
+                    .then(caseData => {
+                        // 建立漂亮的卡片 HTML 結構
+                        const card = document.createElement('div');
+                        card.className = 'gallery-item';
+                        card.innerHTML = `
+                            <span class="gallery-tag">${caseData.tag || '工程實績'}</span>
+                            <img src="${caseData.image}" alt="${caseData.tag}" onerror="this.src='https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80'">
+                            <p style="margin-top: 10px; font-weight: bold; color: #333;">${caseData.description || ''}</p>
+                        `;
+                        container.appendChild(card);
+                    });
+            });
+        }).catch(err => {
+            console.log("尚未有案例資料或讀取失敗", err);
+            document.getElementById('cases-container').innerHTML = '<p style="text-align:center; color:#999;">目前尚無施工案例，請至後台新增！</p>';
+        });
+</script>
 </body>
 </html>
