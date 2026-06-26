@@ -1,0 +1,84 @@
+backend:
+  name: git-gateway
+  branch: main # 如果你 GitHub 建立的預設分支是 master，請記得改成 master
+
+# 圖片上傳後的安全存放路徑 (會自動存進你的儲存庫)
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+publish_mode: simple
+
+collections:
+  - name: "config"
+    label: "📱 聯絡資訊與首頁設定"
+    delete: false
+    editor:
+      preview: false # 關閉複雜預覽，全螢幕純填表單最適合長輩
+    files:
+      - file: "data/settings.json"
+        label: "首頁與基本聯絡資料變更"
+        name: "settings"
+        fields:
+          - {
+              label: "主視覺大標題",
+              name: "hero_title",
+              widget: "string",
+              default: "全境工程有限公司",
+            }
+          - {
+              label: "主視覺副標題描述",
+              name: "hero_desc",
+              widget: "text",
+              default: "【徐先生專業團隊】全台服務・一通電話精準治漏！屋頂外牆防水、結構補強、壁癌徹底根治，給您最安心的施工品質。",
+            }
+          - {
+              label: "LINE官方帳號好友連結",
+              name: "line_url",
+              widget: "string",
+              default: "https://line.me/ti/p/...",
+            }
+          - {
+              label: "徐先生手機號碼(按鈕直撥用)",
+              name: "phone_number",
+              widget: "string",
+              default: "0983182188",
+            }
+          - {
+              label: "電子信箱",
+              name: "email",
+              widget: "string",
+              default: "tf00589550@gmail.com",
+            }
+          - {
+              label: "總公司地址",
+              name: "address",
+              widget: "string",
+              default: "台中市南屯區大墩四街321號B1",
+            }
+
+  - name: "cases"
+    label: "📷 嚴選施工案例管理"
+    folder: "data/cases"
+    create: true # 允許個人自己增加新案例
+    delete: true # 允許刪除
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # 檔名自動加上時間戳記，新照片排在最前面
+    sortable_fields: ["commit_date"]
+    # view_filters: []
+    editor:
+      preview: false
+    fields:
+      - {
+          label: "案例工程類別 (例如：頂樓屋頂防水)",
+          name: "tag",
+          widget: "string",
+        }
+      - {
+          label: "施工現場照片 (點選直接從手機/電腦上傳)",
+          name: "image",
+          widget: "image",
+        }
+      - {
+          label: "施工成果簡短描述 (例如：多層高分子防水塗料施作完成)",
+          name: "description",
+          widget: "string",
+        }
