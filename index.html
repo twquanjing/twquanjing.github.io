@@ -212,14 +212,5 @@
         // 實務上會從由 Decap CMS 建立的 data/cases 目錄讀取，這裡使用動態抓取邏輯
         // 為了確保不報錯，我們建立一個基礎容器。當後台開始產出檔案時，即可無縫渲染。
     </script>
-    <script>
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
-                }
-            });
-        }
-    </script>
 </body>
 </html>
