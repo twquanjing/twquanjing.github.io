@@ -1,203 +1,36 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全境工程有限公司 - 台中抓漏防水推薦｜屋頂外牆防水、壁癌根治、結構補強</title>
-    <meta name="description" content="全境工程有限公司由專業徐先生師傅帶領團隊，提供全台及台中地區房屋防水抓漏工程。360達人網好評推薦，立即加LINE拍照或來電免費諮詢！">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    
-    <style>
-        :root {
-            --primary-color: #00b900; /* LINE 綠 */
-            --secondary-color: #008099; /* 名片青藍色 */
-            --accent-color: #ff9800; /* 強調橘 */
-            --dark-color: #2c3e50;
-            --light-color: #f8f9fa;
-            --phone-color: #d32f2f; /* 電話紅 */
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif; }
-        body { line-height: 1.6; color: #333; background-color: #fff; padding-bottom: 70px; }
-        a { text-decoration: none; }
-        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 60px 0; }
-        .section-title { text-align: center; font-size: 2rem; color: var(--dark-color); margin-bottom: 40px; position: relative; }
-        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background-color: var(--accent-color); margin: 10px auto 0; border-radius: 2px; }
-        
-        /* 導覽列 */
-        header { background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--secondary-color); }
-        .nav-cta a { padding: 10px 20px; border-radius: 50px; font-weight: bold; margin-left: 10px; display: inline-block; }
-        .nav-line { background-color: var(--primary-color); color: white; }
-        .nav-phone { background-color: var(--phone-color); color: white; }
-
-        /* 主視覺區 */
-        .hero {
-            background: linear-gradient(rgba(0, 128, 153, 0.85), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
-            color: white; text-align: center; padding: 120px 20px;
-        }
-        .hero h1 { font-size: 3rem; margin-bottom: 20px; letter-spacing: 1px; }
-        .hero p { font-size: 1.3rem; margin-bottom: 35px; color: #e0f2f1; }
-        .cta-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn { padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 50px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s; }
-        .btn:hover { transform: translateY(-3px); }
-        .btn-line { background-color: var(--primary-color); color: white; }
-        .btn-phone { background-color: var(--phone-color); color: white; }
-        .trust-badge-box { margin-top: 40px; display: inline-block; background: rgba(255, 255, 255, 0.15); padding: 12px 25px; border-radius: 8px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); }
-        .trust-badge-box a { color: #fffde7; font-weight: bold; }
-        .trust-badge-box i { color: #ffeb3b; margin-right: 5px; }
-
-        /* 服務地區條 */
-        .area-bar { background-color: #00667a; color: white; text-align: center; padding: 15px; font-weight: bold; font-size: 1.2rem; letter-spacing: 1px; }
-
-        /* 服務項目區塊 (強制電腦2x2, 手機1x4) */
-        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 20px; }
-        .service-card { background: var(--light-color); padding: 30px; border-radius: 8px; border-top: 5px solid var(--secondary-color); box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
-        .service-card:hover { transform: translateY(-5px); }
-        .service-card i { font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 15px; display: block; }
-        .service-card h3 { margin-bottom: 12px; color: var(--dark-color); font-size: 1.4rem; }
-        .service-card p { font-size: 0.95rem; color: #555; text-align: justify; }
-
-        /* 施工案例區塊 */
-        .gallery { background-color: var(--light-color); }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .gallery-item { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: center; }
-        .gallery-item img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 10px; }
-        .gallery-tag { display: inline-block; background: var(--secondary-color); color: white; padding: 2px 10px; font-size: 0.8rem; border-radius: 3px; font-weight: bold; margin-bottom: 5px; }
-
-        /* 聯絡資訊與 PRO360 評價區塊 */
-        .contact-info { background-color: var(--dark-color); color: white; text-align: center; }
-        .contact-info .section-title { color: white; }
-        .review-card { background: rgba(255, 255, 255, 0.08); max-width: 650px; margin: 0 auto 40px; padding: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
-        .stars { color: #ff9800; font-size: 1.4rem; margin-bottom: 15px; }
-        .btn-review { display: inline-block; background-color: #fff; color: #333; padding: 12px 30px; border-radius: 4px; font-weight: bold; margin-top: 15px; }
-        .info-list { list-style: none; max-width: 500px; margin: 0 auto; text-align: left; font-size: 1.1rem; }
-        .info-list li { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .info-list i { color: var(--accent-color); font-size: 1.3rem; width: 25px; text-align: center; }
-        .inline-phone-btn { background: var(--phone-color); color: white; padding: 5px 15px; border-radius: 4px; font-size: 0.95rem; font-weight: bold; }
-
-        /* 手機版底部固定懸浮聯絡條 */
-        .mobile-footer-cta { position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; display: flex; z-index: 9999; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); }
-        .m-cta-btn { flex: 1; display: flex; justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 1.1rem; gap: 8px; }
-        .m-cta-line { background-color: var(--primary-color); }
-        .m-cta-phone { background-color: var(--phone-color); }
-        footer { background-color: #1a252f; color: #7f8c8d; text-align: center; padding: 20px; font-size: 0.9rem; }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .nav-cta { display: none; }
-            .btn { width: 100%; justify-content: center; }
-            .services-grid { grid-template-columns: 1fr; gap: 20px; } /* 手機版 1x4 */
-        }
-        @media (min-width: 769px) { .mobile-footer-cta { display: none; } body { padding-bottom: 0; } }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="nav-container">
-            <div class="logo">🏠 全境工程有限公司</div>
-            <div class="nav-cta">
-                <a href="#" target="_blank" rel="noopener noreferrer" class="nav-line dynamic-line"><i class="fab fa-line"></i> 加 LINE 免費諮詢</a>
-                <a href="#" class="nav-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 點此撥打專線</a>
-            </div>
-        </div>
-    </header>
-
-    <section class="hero">
-        <div style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
-            <h1 id="hero-title">全境工程有限公司</h1>
-            <p id="hero-desc">專業團隊・一通電話精準治漏！屋頂外牆防水、結構補強、壁癌徹底根治，給您最安心的施工品質。</p>
-            
-            <div class="cta-group">
-                <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-line dynamic-line">
-                    <i class="fab fa-line" style="font-size: 1.6rem;"></i> 優先加 LINE 線上拍照估價
-                </a>
-                <a href="#" class="btn btn-phone dynamic-phone">
-                    <i class="fas fa-phone-alt"></i> 點此致電免費諮詢專線
-                </a>
-            </div>
-
-            <div class="trust-badge-box">
-                <a href="https://www.pro360.com.tw/service/515934" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-star"></i> 榮獲【PRO360達人網】五星好評推薦專家 ➔
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <div class="area-bar">
-        <i class="fas fa-map-marker-alt"></i> 服務範圍：總部據點位於台中市，提供【全台灣各縣市】專業防水抓漏團隊工程服務！
-    </div>
-
-    <section class="container">
-        <h2 class="section-title">核心工程服務</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <i class="fas fa-tint-slash"></i>
-                <h3>專業抓漏止水 & 三大防水</h3>
-                <p>深耕<b>屋頂防水、外牆防水、浴室防水</b>等三大核心區域。透過精準儀器與經驗豐富的「抓漏止水」技術，找出滲水根本源頭，徹底阻絕漏水危機。</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-soap"></i>
-                <h3>結構整修與專業壁癌處理</h3>
-                <p>全境具備專業的<b>壁癌處理</b>工法，全面剷除劣化層、進行殺菌抗鹼整平，並結合結構層修復，還給您乾淨健康的居家牆面，保證不易復發。</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-tools"></i>
-                <h3>結構補強 & 高壓灌注打針</h3>
-                <p>針對房屋老舊、地震引起的剪力牆裂縫，提供專業<b>結構補強</b>服務。利用高壓灌注（俗稱打針）技術將結構裂縫填滿，強化建築本體剛性。</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-th-large"></i>
-                <h3>地坪工程 & 磁磚牆壁空鼓處理</h3>
-                <p>不只防水，更精通各式<b>地坪工程</b>施作。此外，針對家中地板磁磚隆起、牆面澎拱等現象，提供精準的<b>磁磚空鼓、牆壁空鼓處理</b>。</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="gallery">
-        <div class="container">
-            <h2 class="section-title">嚴選施工現場</h2>
-            <div class="gallery-grid" id="cases-container">
-                </div>
-        </div>
-    </section>
-
-    <section class="container contact-info" style="max-width: 100%; padding: 60px 20px;">
-        <h2 class="section-title">官方認證・安心信賴</h2>
-        <div class="review-card">
-            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"全境工程有限公司在【PRO360達人網】上累積了眾多業主的真實五星好評！我們堅持用實惠的價格、透明的合約，為每位客戶徹底搞定漏水煩惱。"</p>
-            <a href="https://www.pro360.com.tw/service/515934" target="_blank" rel="noopener noreferrer" class="btn-review">👉 點此前往 PRO360 達人網 查看官方認證評價</a>
-        </div>
-
-        <ul class="info-list">
-            <li><i class="fas fa-user"></i> <b>專業負責人：</b> <span id="info-boss">徐先生</span></li>
-            <li><i class="fas fa-phone-alt"></i> <b>諮詢專線：</b> <a href="#" class="inline-phone-btn dynamic-phone"><i class="fas fa-phone-alt"></i> 點此直接撥打專線</a></li>
-            <li><i class="fas fa-envelope"></i> <b>電子信箱：</b> <span id="info-email">tf00589550@gmail.com</span></li>
-            <li><i class="fas fa-map-marker-alt"></i> <b>公司地址：</b> <span id="info-address">台中市南屯區大墩四街321號B1 (全台皆有團隊服務)</span></li>
-        </ul>
-    </section>
-
-    <footer><p>&copy; 2026 全境工程有限公司. All Rights Reserved.</p></footer>
-
-    <div class="mobile-footer-cta">
-        <a href="#" target="_blank" rel="noopener noreferrer" class="m-cta-btn m-cta-line dynamic-line"><i class="fab fa-line" style="font-size: 1.4rem;"></i> LINE 線上估價</a>
-        <a href="#" class="m-cta-btn m-cta-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 點此致電徐先生</a>
-    </div>
-
-   <script>
-    // 1. 讀取並渲染基本聯絡資訊
+<script>
+    // 1. 讀取並渲染基本聯絡資訊 + 核心工程服務欄位
     fetch('/data/settings.json')
         .then(res => res.json())
         .then(data => {
+            // 原本的主視覺區
             if(data.hero_title) document.getElementById('hero-title').innerText = data.hero_title;
             if(data.hero_desc) document.getElementById('hero-desc').innerText = data.hero_desc;
+            
+            // ✨ 新增：動態替換核心工程的總標題與四大項目（若後台有改，前台就跟著變；若沒改就用原本的預設文字）
+            if(data.services_main_title) {
+                const titleEl = document.querySelector('.container .section-title');
+                if(titleEl) titleEl.innerText = data.services_main_title;
+            }
+            
+            const cards = document.querySelectorAll('.service-card');
+            if(cards.length >= 4) {
+                if(data.service1_title) cards[0].querySelector('h3').innerText = data.service1_title;
+                if(data.service1_desc) cards[0].querySelector('p').innerHTML = data.service1_desc;
+                
+                if(data.service2_title) cards[1].querySelector('h3').innerText = data.service2_title;
+                if(data.service2_desc) cards[1].querySelector('p').innerHTML = data.service2_desc;
+                
+                if(data.service3_title) cards[2].querySelector('h3').innerText = data.service3_title;
+                if(data.service3_desc) cards[2].querySelector('p').innerHTML = data.service3_desc;
+                
+                if(data.service4_title) cards[3].querySelector('h3').innerText = data.service4_title;
+                if(data.service4_desc) cards[3].querySelector('p').innerHTML = data.service4_desc;
+            }
+
+            // 原本的聯絡資料區
             if(data.email) document.getElementById('info-email').innerText = data.email;
-            if(data.address) document.getElementById('info-address').innerText = data.address + " (全台皆服務)";
+            if(data.address) document.getElementById('info-address').innerText = data.address + " (全台皆有團隊服務)";
             
             if(data.line_url) {
                 document.querySelectorAll('.dynamic-line').forEach(el => el.href = data.line_url);
@@ -207,38 +40,53 @@
             }
         }).catch(err => console.log("使用預設基本資料"));
 
-    // 2. ✨ 自動撈取 Decap CMS 上傳的施工案例並顯示在前台
-    // 透過 GitHub API 自動讀取 data/cases 資料夾下的所有 JSON 檔案
+    // 2. 終極動態案例撈取（同時支援 .md 與 .json 檔案解析）
     fetch('https://api.github.com/repos/twquanjing/twquanjing.github.io/contents/data/cases')
         .then(res => res.json())
         .then(files => {
             if (!Array.isArray(files)) return;
-            
-            // 過濾出所有的 json 檔案
-            const jsonFiles = files.filter(f => f.name.endsWith('.json'));
             const container = document.getElementById('cases-container');
-            container.innerHTML = ''; // 清空載入中字樣
+            container.innerHTML = '';
 
-            // 依序讀取每個案例的內容
-            jsonFiles.forEach(file => {
-                fetch(file.download_url)
-                    .then(res => res.json())
-                    .then(caseData => {
-                        // 建立漂亮的卡片 HTML 結構
-                        const card = document.createElement('div');
-                        card.className = 'gallery-item';
-                        card.innerHTML = `
-                            <span class="gallery-tag">${caseData.tag || '工程實績'}</span>
-                            <img src="${caseData.image}" alt="${caseData.tag}" onerror="this.src='https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80'">
-                            <p style="margin-top: 10px; font-weight: bold; color: #333;">${caseData.description || ''}</p>
-                        `;
-                        container.appendChild(card);
-                    });
+            files.forEach(file => {
+                if (file.name.endsWith('.json') || file.name.endsWith('.md')) {
+                    fetch(file.download_url)
+                        .then(res => res.text())
+                        .then(text => {
+                            let tag = '工程實績';
+                            let image = '';
+                            let description = '';
+
+                            if (file.name.endsWith('.json')) {
+                                try {
+                                    const caseData = JSON.parse(text);
+                                    tag = caseData.tag || tag;
+                                    image = caseData.image || image;
+                                    description = caseData.description || description;
+                                } catch(e) {}
+                            } else {
+                                const tagMatch = text.match(/tag:\s*["']?([^"'\n]+)["']?/);
+                                const imageMatch = text.match(/image:\s*["']?([^"'\n]+)["']?/);
+                                const descMatch = text.match(/description:\s*["']?([^"'\n]+)["']?/);
+                                if (tagMatch) tag = tagMatch[1];
+                                if (imageMatch) image = imageMatch[1];
+                                if (descMatch) description = descMatch[1];
+                            }
+
+                            if (image) {
+                                const card = document.createElement('div');
+                                card.className = 'gallery-item';
+                                card.innerHTML = `
+                                    <span class="gallery-tag">${tag}</span>
+                                    <img src="${image}" alt="${tag}" onerror="this.src='https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80'">
+                                    <p style="margin-top: 10px; font-weight: bold; color: #333;">${description}</p>
+                                `;
+                                container.appendChild(card);
+                            }
+                        });
+                }
             });
         }).catch(err => {
-            console.log("尚未有案例資料或讀取失敗", err);
             document.getElementById('cases-container').innerHTML = '<p style="text-align:center; color:#999;">目前尚無施工案例，請至後台新增！</p>';
         });
 </script>
-</body>
-</html>
