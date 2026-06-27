@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const axios = require('axios');
 
 module.exports = async (req, res) => {
   const { host } = req.headers;
@@ -10,6 +9,7 @@ module.exports = async (req, res) => {
   const client_id = process.env.OAUTH_CLIENT_ID;
   const client_secret = process.env.OAUTH_CLIENT_SECRET;
 
+  // 1. 處理 /login 路由
   if (url.pathname === '/login') {
     const state = crypto.randomBytes(16).toString('hex');
     res.writeHead(302, {
@@ -18,18 +18,26 @@ module.exports = async (req, res) => {
     return res.end();
   }
 
+  // 2. 處理 /callback 路由
   if (url.pathname === '/callback') {
     const code = url.searchParams.get('code');
     try {
-      const response = await axios.post('https://github.com/login/oauth/access_token', {
-        client_id,
-        client_secret,
-        code
-      }, {
-        headers: { Accept: 'application/json' }
+      // 這裡改用 Node.js 內建的 fetch，不需要安裝 axios，徹底根除 500 報錯
+      const response = await fetch('https://github.com/login/oauth/access_token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          client_id,
+          client_secret,
+          code
+        })
       });
 
-      const { access_token, error } = response.data;
+      const data = await response.json();
+      const { access_token, error } = data;
       
       let content, status;
       if (error) {
