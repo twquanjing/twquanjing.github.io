@@ -172,7 +172,7 @@
             <div class="logo">🏠 全境工程有限公司</div>
             <div class="nav-cta">
                 <a href="#" target="_blank" rel="noopener noreferrer" class="nav-line dynamic-line"><i class="fab fa-line"></i> 加 LINE 免費諮詢</a>
-                <a href="#" class="nav-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 免費諮詢專線</a>
+                <a href="javascript:void(0);" class="nav-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 免費諮詢專線</a>
             </div>
         </div>
     </header>
@@ -292,7 +292,8 @@
         <a href="#" class="m-cta-btn m-cta-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 點此致電徐先生</a>
     </div>
 
-<script>// 1. 讀取並渲染基本聯絡資訊 + 核心工程服務欄位
+    <script>
+        // 1. 讀取並渲染基本聯絡資訊 + 核心工程服務欄位
         fetch('/data/settings.json')
             .then(res => res.json())
             .then(data => {
@@ -320,13 +321,11 @@
                     if(data.service4_title) cards[3].querySelector('h3').innerText = data.service4_title;
                     if(data.service4_desc) cards[3].querySelector('p').innerHTML = data.service4_desc;
                 }
-
-                // 聯絡資料區（✨ 智慧連動與安全防護機制）
+    
+                // 聯絡資料區
                 if(data.email) document.getElementById('info-email').innerText = data.email;
                 if(data.address) document.getElementById('info-address').innerText = data.address;
                 
-                // ➔ 統編沒在 JSON 裡也沒關係！這裡直接保留 HTML 裡寫好的 42874363，絕對不會被蓋掉。
-                // ➔ 未來如果後台自動增強支援了 tax_id 欄位，這行程式碼也會自動無縫接軌。
                 if(data.tax_id && document.getElementById('info-tax-id')) {
                     document.getElementById('info-tax-id').innerText = data.tax_id;
                 }
@@ -338,7 +337,7 @@
                     document.querySelectorAll('.dynamic-phone').forEach(el => el.href = "tel:" + data.phone_number);
                 }
                 
-                // 客戶評論區（✨ 安全防護：如果後台沒有這個欄位，直接保留 HTML 上的預設文字）
+                // 客戶評論區
                 if(data.latest_review) {
                     document.getElementById('dynamic-review').innerText = `"${data.latest_review}"`;
                 }
@@ -346,7 +345,7 @@
                     document.getElementById('review-author').innerText = `— 台中 ${data.latest_review_author}`;
                 }                
             }).catch(err => console.log("使用預設基本資料或 JSON 解析失敗"));
-
+    
         // 2. 終極動態案例撈取（安全防護完全體）
         fetch('https://api.github.com/repos/twquanjing/twquanjing.github.io/contents/data/cases')
             .then(res => {
@@ -363,47 +362,46 @@
                 }
                 
                 container.innerHTML = ''; // 確定有檔案，清空「載入中」字樣
-
+    
                 files.forEach(file => {
-                    if (file.name.endsWith('.json') || file.name.endsWith('.md')) {
+                    if (file.name.endsWith('.json')) {
                         fetch(file.download_url)
-                            .then(res => res.text())
-                            .then(text => {
-                                let tag = '工程實績';
-                                let image = '';
-                                let description = '';
-
-                                if (file.name.endsWith('.json')) {
-                                    try {
-                                        const caseData = JSON.parse(text);
-                                        tag = caseData.tag || tag;
-                                        image = caseData.image || image;
-                                        description = caseData.description || description;
-                                    } catch(e) {}
-                                } else {
-                                    const tagMatch = text.match(/tag:\s*["']?([^"'\n]+)["']?/);
-                                    const imageMatch = text.match(/image:\s*["']?([^"'\n]+)["']?/);
-                                    const descMatch = text.match(/description:\s*["']?([^"'\n]+)["']?/);
-                                    if (tagMatch) tag = tagMatch[1];
-                                    if (imageMatch) image = imageMatch[1];
-                                    if (descMatch) description = descMatch[1];
-                                }
-
-                                if (image && document.getElementById('cases-container')) {
+                            .then(res => res.json())
+                            .then(caseData => {
+                                const tag = caseData.tag || '工程實績';
+                                
+                                // ✨ 智慧多圖迴圈渲染
+                                if (caseData.photos && Array.isArray(caseData.photos)) {
+                                    caseData.photos.forEach(item => {
+                                        if (item.image) {
+                                            const card = document.createElement('div');
+                                            card.className = 'gallery-item';
+                                            card.innerHTML = `
+                                                <span class="gallery-tag">${tag}</span>
+                                                <img src="${item.image}" alt="${item.description || tag}" onerror="this.src='https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80'">
+                                                <p style="margin-top: 10px; font-weight: bold; color: #333;">${item.description || ''}</p>
+                                            `;
+                                            container.appendChild(card);
+                                        }
+                                    });
+                                } else if (caseData.image) {
+                                    // 舊案例相容備援機制
                                     const card = document.createElement('div');
                                     card.className = 'gallery-item';
                                     card.innerHTML = `
                                         <span class="gallery-tag">${tag}</span>
-                                        <img src="${image}" alt="${tag}" onerror="this.src='https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80'">
-                                        <p style="margin-top: 10px; font-weight: bold; color: #333;">${description}</p>
+                                        <img src="${caseData.image}" alt="${caseData.description || tag}">
+                                        <p style="margin-top: 10px; font-weight: bold; color: #333;">${caseData.description || ''}</p>
                                     `;
-                                    document.getElementById('cases-container').appendChild(card);
+                                    container.appendChild(card);
                                 }
-                            });
+                            })
+                            .catch(err => console.log("單一案例解析失敗:", err));
                     }
-                });
+                }); // ✨ 修正：補上 files.forEach 的閉合括號
+                
             }).catch(err => {
-                // ✨ 核心修正：加入安全檢查，確保容器存在才塞入文字，且加上 grid-column 撐滿排版
+                // ✨ 核心修正：加入安全檢查，確保容器存在才塞入文字
                 console.log("撈取提示:", err.message);
                 const container = document.getElementById('cases-container');
                 if (container) {
