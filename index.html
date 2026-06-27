@@ -199,23 +199,54 @@
         </div>
     </section>
 
-    <section class="container contact-info" style="max-width: 100%; padding: 60px 20px;">
+   <section class="container contact-info" style="max-width: 100%; padding: 60px 20px;">
         <h2 class="section-title">官方認證・安心信賴</h2>
+        
         <div class="review-card">
             <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
             <p id="dynamic-review" style="font-size: 1.1rem; font-style: italic; margin-bottom: 10px;">"正在載入最新業主真實好評..."</p>
             <span id="review-author" style="color: #ff9800; font-size: 0.9rem; display: block; margin-bottom: 20px;"></span>
             <a href="https://www.pro360.com.tw/service/515934" target="_blank" rel="noopener noreferrer" class="btn-review">👉 點此前往 PRO360 查看所有 5 星評價</a>
-        </div>
+        </div> <ul class="info-list">
+            <li>
+                <i class="fas fa-user"></i> 
+                <div class="info-item-content">
+                    <b>專業聯絡人：</b> <span id="info-boss">徐先生</span>
+                </div>
+            </li>
+            
+            <li>
+                <i class="fas fa-id-card"></i> 
+                <div class="info-item-content">
+                    <b>公司統編：</b>
+                    <span id="info-tax-id">42874363</span>
+                </div> </li>
 
-        <ul class="info-list">
-            <li><i class="fas fa-user"></i> <b>聯絡人：</b> <span id="info-boss">徐先生</span></li>
-            <li><i class="fas fa-phone-alt"></i> <b>諮詢專線：</b> <a href="#" class="inline-phone-btn dynamic-phone"><i class="fas fa-phone-alt"></i> 點此撥打專線</a></li>
-            <li><i class="fas fa-envelope"></i> <b>電子信箱：</b> <span id="info-email">twquanjing@gmail.com</span></li>
-            <li><i class="fas fa-map-marker-alt"></i> <b>公司地址：</b> <span id="info-address">台中市南屯區大墩四街321號B1</span></li>
+            <li>
+                <i class="fas fa-phone-alt"></i> 
+                <div class="info-item-content">
+                    <b>諮詢專線：</b>
+                    <a href="#" class="inline-phone-btn dynamic-phone"><i class="fas fa-phone-alt"></i> 點此撥打專線</a>
+                </div>
+            </li>
+
+            <li>
+                <i class="fas fa-envelope"></i> 
+                <div class="info-item-content">
+                    <b>電子信箱：</b>
+                    <span id="info-email">twquanjing@gmail.com</span>
+                </div>
+            </li>
+
+            <li>
+                <i class="fas fa-map-marker-alt"></i> 
+                <div class="info-item-content">
+                    <b>公司地址：</b>
+                    <span id="info-address">台中市南屯區大墩四街321號B1</span>
+                </div>
+            </li>
         </ul>
     </section>
-
     <footer><p>&copy; 2026 全境工程有限公司. All Rights Reserved.</p></footer>
 
     <div class="mobile-footer-cta">
@@ -253,9 +284,14 @@
                     if(data.service4_desc) cards[3].querySelector('p').innerHTML = data.service4_desc;
                 }
 
-                // 聯絡資料區
-                if(data.email) document.getElementById('info-email').innerText = data.email;
-                if(data.address) document.getElementById('info-address').innerText = data.address;
+                // 聯絡資料區（加入統編與安全預設值）
+                document.getElementById('info-email').innerText = data.email || 'twquanjing@gmail.com';
+                document.getElementById('info-address').innerText = data.address || '台中市南屯區大墩四街321號B1';
+                
+                // ✨ 讓統編也能連動後台 JSON（如果 data.tax_id 不存在，就用預設的 42874363）
+                if(document.getElementById('info-tax-id')) {
+                    document.getElementById('info-tax-id').innerText = data.tax_id || '42874363';
+                }
                 
                 if(data.line_url) {
                     document.querySelectorAll('.dynamic-line').forEach(el => el.href = data.line_url);
@@ -263,13 +299,14 @@
                 if(data.phone_number) {
                     document.querySelectorAll('.dynamic-phone').forEach(el => el.href = "tel:" + data.phone_number);
                 }
+                
                 // 客戶評論區
                 if(data.latest_review) {
                     document.getElementById('dynamic-review').innerText = `"${data.latest_review}"`;
                 }
                 if(data.latest_review_author) {
                     document.getElementById('review-author').innerText = `— 台中 ${data.latest_review_author}`;
-                }                
+                }
             }).catch(err => console.log("使用預設基本資料"));
 
         // 2. 終極動態案例撈取（安全防護完全體）
