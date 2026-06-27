@@ -78,35 +78,36 @@
           APIUrl: 'https://calm-tarsier-bd25df.netlify.app/.netlify/identity'
         });
 
-        // 2. 當「標準手動登入成功」時觸發
-        window.netlifyIdentity.on('login', () => {
-          window.netlifyIdentity.close();
-          window.location.href = 'https://twquanjing.github.io/admin/#/';
-        });
-
-        // 3. 當使用者真正點擊「登出」按鈕時，主動倒回前台首頁（完全不影響訪客，最安全）
-        window.netlifyIdentity.on('logout', () => {
-          console.log("使用者點擊登出，正在跳轉回前台首頁...");
-          window.location.href = 'https://twquanjing.github.io/';
-        });
-
-        // 4. ✨【強制跳轉補強】專治 Google 登入不自動轉址的隱形雷達
-        // 每 1 秒檢查一次，一旦發現背景已經認證成功拿到 user 資料，但網址還卡在沒有 /#/ 的登入頁面
-        // 就代表系統漏掉觸發 login 事件，此時由這個雷達「主動推一把」強制轉址進後台！
-        setInterval(() => {
-          const user = window.netlifyIdentity.currentUser();
+        // 🎯 核心邏輯：憑 Token（User 狀態）決定生死
+        const checkAuthAndRedirect = () => {
+          const user = window.netlifyIdentity.currentUser(); // 檢查瀏覽器內是否有登入 Token
           const currentHash = window.location.hash;
-          
-          // 如果已登入，且網址沒有任何後台路徑雜湊（代表卡在登入前畫面）
+
+          // 【狀態 A】有 Token，但網址還在登入前頁面 ➔ 代表登入成功，立刻引導進後台
           if (user && (!currentHash || currentHash === '#' || currentHash === '')) {
-            console.log("偵測到帳號已認證成功，雷達正在強制引導進入後台...");
+            console.log("偵測到成功取得 Token，正在引導進入管理後台...");
             window.netlifyIdentity.close();
             window.location.href = 'https://twquanjing.github.io/admin/#/';
           }
-        }, 1000);
+        };
+
+        // 2. 監聽：一旦 Widget 認證成功拿到 Token，立刻執行跳轉
+        window.netlifyIdentity.on('login', () => {
+          checkAuthAndRedirect();
+        });
+
+        // 3. 監聽：當點擊登出按鈕，Token 被清除時，立刻主動倒回前台
+        window.netlifyIdentity.on('logout', () => {
+          console.log("Token 已清除，正在主動跳轉回前台首頁...");
+          window.location.href = 'https://twquanjing.github.io/';
+        });
+
+        // 4. ✨ 防呆雙保險：網頁一打開（或重整時），立刻主動掃描一次 Token 狀態
+        // 這能確保當長輩用 Google 登入、視窗重新導回時，100% 觸發進入後台
+        checkAuthAndRedirect();
 
       }
     });
-</script>
+  </script>
 </body>
 </html>
