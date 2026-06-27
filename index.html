@@ -73,26 +73,30 @@
         .review-card { background: rgba(255, 255, 255, 0.08); max-width: 650px; margin: 0 auto 40px; padding: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
         .stars { color: #ff9800; font-size: 1.4rem; margin-bottom: 15px; }
         .btn-review { display: inline-block; background-color: #fff; color: #333; padding: 12px 30px; border-radius: 4px; font-weight: bold; margin-top: 15px; }/* 聯絡資訊列表底層設定（電腦版預設：橫向一整行） */
+/* 聯絡資訊列表底層設定（電腦版：維持一行、整塊置中） */
         .info-list { 
             list-style: none; 
-            max-width: 800px; /* 稍微放大最大寬度，讓地址在桌機版能完整排在一行 */
+            max-width: 750px; /* 放大最大寬度，確保地址在桌機版絕對不擠壓換行 */
             margin: 0 auto; 
-            text-align: left; 
+            text-align: center; 
             font-size: clamp(0.95rem, 4vw, 1.1rem); 
         }
         .info-list li { 
             margin-bottom: 20px; 
             display: flex; 
-            align-items: center; /* 圖示與文字水平居中對齊 */
-            gap: 12px; 
+            flex-direction: row;      /* 橫向排列 */
+            justify-content: center;  /* ✨ 核心修改：讓整行在電腦版居中對齊 */
+            align-items: center;      /* 上下居中 */
+            gap: 8px; 
         }
         .info-list i { color: var(--accent-color); font-size: 1.3rem; width: 25px; text-align: center; }
         
-        /* ✨ 修改：桌機版維持橫向一整行，不強迫換行 */
+        /* 桌機版維持橫向一整行（標題與內容並排） */
         .info-item-content { 
             display: flex; 
             flex-direction: row; 
             align-items: center;
+            gap: 6px;
         } 
         .inline-phone-btn { background: var(--phone-color); color: white; padding: 5px 15px; border-radius: 4px; font-size: 0.95rem; font-weight: bold; width: fit-content; }
 
