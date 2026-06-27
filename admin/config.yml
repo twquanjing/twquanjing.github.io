@@ -52,7 +52,13 @@ collections:
     delete: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     sortable_fields: ["commit_date"]
+# 找到 cases 的 fields 區塊，修改成如下結構：
+fields:
+  - { label: "案例標題/分類", name: "tag", widget: "string" }
+  - label: "施工照片清單"
+    name: "photos"
+    widget: "list"
+    summary: "{{fields.description}}" # 讓長輩在後台列表一眼看出這張照片的敘述
     fields:
-      - { label: "案例工程類別 (例如：頂樓屋頂防水)", name: "tag", widget: "string" }
-      - { label: "施工現場照片 (點選直接從手機/電腦上傳)", name: "image", widget: "image" }
-      - { label: "施工成果簡短描述", name: "description", widget: "string" }
+      - { label: "上傳施工照片", name: "image", widget: "image" }
+      - { label: "這張照片的施工敘述", name: "description", widget: "string" }
