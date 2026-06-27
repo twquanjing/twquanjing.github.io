@@ -148,17 +148,19 @@
             }
             
             /* 🎯 核心修正：只讓最後一個 li（公司地址）的標題與內容強制拆成兩行 */
-            .info-list li:last-child .info-item-content b {
-                flex-basis: 100%;            /* ✨ 讓「📍 公司地址：」單獨霸佔第一行 */
+                
+            .info-list li:nth-last-child(-n+2) .info-item-content b {
+                flex-basis: 100%;          
                 display: flex;
                 align-items: center;
             }
-            .info-list li:last-child .info-item-content span {
+            
+            .info-list li:nth-last-child(-n+2) .info-item-content span {
                 flex-basis: 100%;            /* ✨ 讓詳細地址內容掉到第二行 */
                 margin-top: 4px;
                 padding-left: 29px;          /* ✨ 精準對齊：25px(Icon寬)+4px(間距)，讓地址剛好對齊上方的字 */
                 line-height: 1.5;
-            }
+            } 
         }
         @media (min-width: 769px) { .mobile-footer-cta { display: none; } body { padding-bottom: 0; } }
     </style>
@@ -170,7 +172,7 @@
             <div class="logo">🏠 全境工程有限公司</div>
             <div class="nav-cta">
                 <a href="#" target="_blank" rel="noopener noreferrer" class="nav-line dynamic-line"><i class="fab fa-line"></i> 加 LINE 免費諮詢</a>
-                <a href="#" class="nav-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 點此撥打專線</a>
+                <a href="#" class="nav-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 免費諮詢專線</a>
             </div>
         </div>
     </header>
@@ -185,7 +187,7 @@
                     <i class="fab fa-line" style="font-size: 1.6rem;"></i> LINE 免費諮詢
                 </a>
                 <a href="#" class="btn btn-phone dynamic-phone">
-                    <i class="fas fa-phone-alt"></i> 點此致電免費諮詢
+                    <i class="fas fa-phone-alt"></i> 免費諮詢專線
                 </a>
             </div>
 
