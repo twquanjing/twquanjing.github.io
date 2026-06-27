@@ -19,7 +19,7 @@
             --phone-color: #d32f2f; /* 電話紅 */
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif; }
-        body { line-height: 1.6; color: #333; background-color: #fff; padding-bottom: 70px; }
+        body { line-height: 1.6; color: #333; background-color: #fff; padding-bottom: 90px; }
         a { text-decoration: none; }
         .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 60px 0; }
         .section-title { text-align: center; font-size: 2rem; color: var(--dark-color); margin-bottom: 40px; position: relative; }
@@ -254,8 +254,7 @@
         <a href="#" class="m-cta-btn m-cta-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 點此致電徐先生</a>
     </div>
 
-<script>
-        // 1. 讀取並渲染基本聯絡資訊 + 核心工程服務欄位
+<script>// 1. 讀取並渲染基本聯絡資訊 + 核心工程服務欄位
         fetch('/data/settings.json')
             .then(res => res.json())
             .then(data => {
@@ -284,13 +283,14 @@
                     if(data.service4_desc) cards[3].querySelector('p').innerHTML = data.service4_desc;
                 }
 
-                // 聯絡資料區（加入統編與安全預設值）
-                document.getElementById('info-email').innerText = data.email || 'twquanjing@gmail.com';
-                document.getElementById('info-address').innerText = data.address || '台中市南屯區大墩四街321號B1';
+                // 聯絡資料區（✨ 智慧連動與安全防護機制）
+                if(data.email) document.getElementById('info-email').innerText = data.email;
+                if(data.address) document.getElementById('info-address').innerText = data.address;
                 
-                // ✨ 讓統編也能連動後台 JSON（如果 data.tax_id 不存在，就用預設的 42874363）
-                if(document.getElementById('info-tax-id')) {
-                    document.getElementById('info-tax-id').innerText = data.tax_id || '42874363';
+                // ➔ 統編沒在 JSON 裡也沒關係！這裡直接保留 HTML 裡寫好的 42874363，絕對不會被蓋掉。
+                // ➔ 未來如果後台自動增強支援了 tax_id 欄位，這行程式碼也會自動無縫接軌。
+                if(data.tax_id && document.getElementById('info-tax-id')) {
+                    document.getElementById('info-tax-id').innerText = data.tax_id;
                 }
                 
                 if(data.line_url) {
@@ -300,14 +300,14 @@
                     document.querySelectorAll('.dynamic-phone').forEach(el => el.href = "tel:" + data.phone_number);
                 }
                 
-                // 客戶評論區
+                // 客戶評論區（✨ 安全防護：如果後台沒有這個欄位，直接保留 HTML 上的預設文字）
                 if(data.latest_review) {
                     document.getElementById('dynamic-review').innerText = `"${data.latest_review}"`;
                 }
                 if(data.latest_review_author) {
                     document.getElementById('review-author').innerText = `— 台中 ${data.latest_review_author}`;
-                }
-            }).catch(err => console.log("使用預設基本資料"));
+                }                
+            }).catch(err => console.log("使用預設基本資料或 JSON 解析失敗"));
 
         // 2. 終極動態案例撈取（安全防護完全體）
         fetch('https://api.github.com/repos/twquanjing/twquanjing.github.io/contents/data/cases')
