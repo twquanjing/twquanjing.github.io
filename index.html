@@ -73,10 +73,10 @@
         .review-card { background: rgba(255, 255, 255, 0.08); max-width: 650px; margin: 0 auto 40px; padding: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
         .stars { color: #ff9800; font-size: 1.4rem; margin-bottom: 15px; }
         .btn-review { display: inline-block; background-color: #fff; color: #333; padding: 12px 30px; border-radius: 4px; font-weight: bold; margin-top: 15px; }/* 聯絡資訊列表底層設定（電腦版預設：橫向一整行） */
-/* 聯絡資訊列表底層設定（電腦版：維持一行、整塊置中） */
+/* 聯絡資訊列表底層設定（電腦版：全數置中並排） */
         .info-list { 
             list-style: none; 
-            max-width: 750px; /* 放大最大寬度，確保地址在桌機版絕對不擠壓換行 */
+            max-width: 850px; 
             margin: 0 auto; 
             text-align: center; 
             font-size: clamp(0.95rem, 4vw, 1.1rem); 
@@ -84,19 +84,28 @@
         .info-list li { 
             margin-bottom: 20px; 
             display: flex; 
-            flex-direction: row;      /* 橫向排列 */
-            justify-content: center;  /* ✨ 核心修改：讓整行在電腦版居中對齊 */
-            align-items: center;      /* 上下居中 */
-            gap: 8px; 
+            flex-direction: row;
+            justify-content: center;  /* 桌機整行置中 */
+            align-items: center; 
         }
-        .info-list i { color: var(--accent-color); font-size: 1.3rem; width: 25px; text-align: center; }
         
-        /* 桌機版維持橫向一整行（標題與內容並排） */
+        /* 標題內部的 Icon 樣式修正 */
+        .info-item-content b i { 
+            color: var(--accent-color); 
+            font-size: 1.2rem; 
+            width: 25px; 
+            text-align: center; 
+            margin-right: 4px;
+        }
+        
+        /* 桌機版內容架構：保持橫向一行結束 */
         .info-item-content { 
             display: flex; 
             flex-direction: row; 
             align-items: center;
             gap: 6px;
+            width: 100%;
+            justify-content: center;
         } 
         .inline-phone-btn { background: var(--phone-color); color: white; padding: 5px 15px; border-radius: 4px; font-size: 0.95rem; font-weight: bold; width: fit-content; }
 
@@ -107,59 +116,41 @@
         .m-cta-phone { background-color: var(--phone-color); }
         footer { background-color: #1a252f; color: #7f8c8d; text-align: center; padding: 20px; font-size: 0.9rem; }
 
-/* ✨ 手機版 RWD 特效：只有地址換行，其餘項目維持一行，全數置中 */
+/* ✨ 手機版 RWD 特效：Icon+標題永不分離，僅地址內容獨立換行置中 */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
             .nav-cta { display: none; }
             .btn { width: 100%; justify-content: center; }
             .services-grid { grid-template-columns: 1fr; gap: 20px; }
             
-            /* 聯絡資訊手機版基礎設定 */
             .info-list {
                 text-align: center;
             }
             .info-list li {
                 display: flex;
-                flex-direction: row;      /* 預設全部項目都橫向並排 */
-                justify-content: center;  /* 整體置中 */
+                flex-direction: row;
+                justify-content: center;
                 align-items: center;
-                gap: 8px;
                 margin-bottom: 20px;
-                flex-wrap: wrap;          /* 允許地址滿了自動折行 */
             }
             
-            /* 預設所有項目的內容跟標題並排在同一行 */
+            /* 手機版基礎：標題與內容依然維持在同一行 */
             .info-item-content {
-                display: flex;
                 flex-direction: row;
-                align-items: center;
+                flex-wrap: wrap;       /* 允許有特殊需要的項目向下折行 */
+                justify-content: center;
                 gap: 6px;
             }
             
-            /* 🎯 核心精準控制：只針對「最後一個 li」（也就是公司地址）進行換行調整 */
-            .info-list li:last-child {
-                flex-direction: row;      /* 讓 Icon 與標題保持在第一行 */
+            /* 🎯 終極精準控制：只讓最後一個 li（公司地址）的內容(span)掉到第二行 */
+            .info-list li:last-child .info-item-content b {
+                flex-basis: 100%;      /* 讓「📍 公司地址：」強行霸佔第一行整行，達成置中 */
+                text-align: center;
             }
-            
-            /* 🎯 讓最後一個 li 裡面的內容變成垂直排列，逼迫地址內容掉到第二行 */
-            .info-list li:last-child .info-item-content {
-                flex-direction: column;   /* 標題與地址上下分開 */
-                flex-basis: 100%;         /* 撐滿寬度以利換行 */
-                width: 100%;
-                align-items: center;      /* 地址文字居中 */
-                gap: 4px;
-            }
-            
-            /* 讓所有直屬 Icon 穩定與第一行文字對齊 */
-            .info-list li > i {
-                font-size: 1.2rem;
-                display: inline-block;
-                margin-top: 0;
-            }
-            
-            /* 調整諮詢專線按鈕在手機版的高度，維持完美置中 */
-            .inline-phone-btn {
-                margin-top: 0; 
+            .info-list li:last-child .info-item-content span {
+                flex-basis: 100%;      /* 讓地址內容也霸佔一整行，自然掉到第二行置中 */
+                text-align: center;
+                margin-top: 4px;
             }
         }
         @media (min-width: 769px) { .mobile-footer-cta { display: none; } body { padding-bottom: 0; } }
@@ -246,42 +237,35 @@
             <p id="dynamic-review" style="font-size: 1.1rem; font-style: italic; margin-bottom: 10px;">"正在載入最新業主真實好評..."</p>
             <span id="review-author" style="color: #ff9800; font-size: 0.9rem; display: block; margin-bottom: 20px;"></span>
             <a href="https://www.pro360.com.tw/service/515934" target="_blank" rel="noopener noreferrer" class="btn-review">👉 點此前往 PRO360 查看所有 5 星評價</a>
-        </div> <ul class="info-list">
+        </div> 
+       <ul class="info-list">
             <li>
-                <i class="fas fa-user"></i> 
                 <div class="info-item-content">
-                    <b>專業聯絡人：</b> <span id="info-boss">徐先生</span>
+                    <b><i class="fas fa-user"></i> 專案聯絡人：</b> <span id="info-boss">徐先生</span>
                 </div>
             </li>
             
             <li>
-                <i class="fas fa-id-card"></i> 
                 <div class="info-item-content">
-                    <b>公司統編：</b>
-                    <span id="info-tax-id">42874363</span>
-                </div> </li>
-
-            <li>
-                <i class="fas fa-phone-alt"></i> 
-                <div class="info-item-content">
-                    <b>諮詢專線：</b>
-                    <a href="#" class="inline-phone-btn dynamic-phone"><i class="fas fa-phone-alt"></i> 點此撥打專線</a>
+                    <b><i class="fas fa-id-card"></i> 公司統編：</b> <span id="info-tax-id">42874363</span>
                 </div>
             </li>
 
             <li>
-                <i class="fas fa-envelope"></i> 
                 <div class="info-item-content">
-                    <b>電子信箱：</b>
-                    <span id="info-email">twquanjing@gmail.com</span>
+                    <b><i class="fas fa-phone-alt"></i> 諮詢專線：</b> <a href="#" class="inline-phone-btn dynamic-phone"><i class="fas fa-phone-alt"></i> 點此撥打專線</a>
                 </div>
             </li>
 
             <li>
-                <i class="fas fa-map-marker-alt"></i> 
                 <div class="info-item-content">
-                    <b>公司地址：</b>
-                    <span id="info-address">台中市南屯區大墩四街321號B1</span>
+                    <b><i class="fas fa-envelope"></i> 電子信箱：</b> <span id="info-email">twquanjing@gmail.com</span>
+                </div>
+            </li>
+
+            <li>
+                <div class="info-item-content">
+                    <b><i class="fas fa-map-marker-alt"></i> 公司地址：</b> <span id="info-address">台中市南屯區大墩四街321號B1</span>
                 </div>
             </li>
         </ul>
