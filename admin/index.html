@@ -69,44 +69,26 @@
     }
   </script>
 
-  <script>
+ <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (window.netlifyIdentity) {
         
-        // 初始化連線
+        // 1. 初始化 Netlify Identity 連線
         window.netlifyIdentity.init({
           APIUrl: 'https://calm-tarsier-bd25df.netlify.app/.netlify/identity'
         });
 
-        // 正常狀況下的登入監聽
+        // 2. 當「登入成功」時觸發：關閉登入彈窗，並引導進入管理後台
         window.netlifyIdentity.on('login', () => {
           window.netlifyIdentity.close();
           window.location.href = 'https://twquanjing.github.io/admin/#/';
         });
 
-        // 正常狀況下的登出監聽
+        // 3. ✨ 您要的主動式登出：只有當使用者真正點擊「登出」按鈕時，才主動倒回前台首頁
         window.netlifyIdentity.on('logout', () => {
+          console.log("使用者點擊登出，正在跳轉回前台首頁...");
           window.location.href = 'https://twquanjing.github.io/';
         });
-
-        // 🔥【超強雙向雷達】每 1.5 秒自動檢查登入與登出狀態，防止轉址被系統攔截
-        setInterval(() => {
-          const user = window.netlifyIdentity.currentUser();
-          const currentHash = window.location.hash;
-
-          // 1. 登入雷達：如果發現已經拿到登入資料，且網址還卡在沒有 /#/ 的登入頁，強行引導進入後台
-          if (user && (!currentHash || currentHash === '#')) {
-            console.log("偵測到登入成功，正在強制引導進入後台...");
-            window.netlifyIdentity.close();
-            window.location.href = 'https://twquanjing.github.io/admin/#/';
-          }
-
-          // 2. 登出雷達：如果網址在後台內（有 /#/），但身分證 token 消失了，代表長輩點了登出，立刻強行退回前台首頁
-          if (!user && currentHash && currentHash.includes('#/')) {
-            console.log("偵測到使用者已登出，正在自動返回前台首頁...");
-            window.location.href = 'https://twquanjing.github.io/';
-          }
-        }, 1500);
 
       }
     });
