@@ -6,7 +6,7 @@
   <title>全境工程有限公司 - 網站管理後台</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
-  <style>
+<style>
     /* 強行放大後台所有文字與輸入框 */
     html, body, #nc-root {
       font-size: 18px !important; /* 全域基礎字體放大 */
@@ -26,19 +26,22 @@
       margin-bottom: 8px !important;
     }
 
-    /* 放大輸入框（Input）與文字區域（Textarea）的文字與內距 */
-    input, textarea, select, [class*="ControlPaneContainer"] {
+    /* ✨ 核心修正：只精準放大真正的輸入框、下拉選單，移除會鎖死點擊的 ControlPaneContainer */
+    input, textarea, select, [class*="ControlPane"] input, [class*="ControlPane"] textarea {
       font-size: 18px !important;
       padding: 12px !important;
       line-height: 1.6 !important;
       border: 2px solid #bdc3c7 !important; /* 加粗框線，讓長輩看更清 */
       border-radius: 6px !important;
+      background-color: #fff !important;
+      color: #333 !important;
     }
 
     /* 當輸入框被點擊時，框線加深 */
-    input:focus, textarea:focus {
+    input:focus, textarea:focus, select:focus {
       border-color: #008099 !important;
       box-shadow: 0 0 8px rgba(0, 128, 153, 0.2) !important;
+      outline: none !important;
     }
 
     /* 頂部發布與儲存按鈕加大 */
