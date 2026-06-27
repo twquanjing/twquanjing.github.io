@@ -52,13 +52,14 @@ collections:
     delete: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     sortable_fields: ["commit_date"]
-    format: "json" # 確保存檔格式為前台讀取所需的 JSON 格式
+    format: "json"
     fields:
-      - { label: "案例標題/分類", name: "tag", widget: "string" }
-      - label: "施工照片清單"
+      - { label: "工程分類/標籤 (如：屋頂防水、外牆防水)", name: "tag", widget: "string" }
+      - { label: "專案具體名稱 (如：南屯區張公館頂樓防水工程)", name: "title", widget: "string" }
+      - label: "本專案施工照片清單（依序排列故事線）"
         name: "photos"
         widget: "list"
         summary: "{{fields.description}}"
         fields:
           - { label: "上傳施工照片", name: "image", widget: "image" }
-          - { label: "這張照片的施工敘述", name: "description", widget: "string" }
+          - { label: "這張照片的施工階段/敘述 (如：施工前：嚴重淘空)", name: "description", widget: "string" }
