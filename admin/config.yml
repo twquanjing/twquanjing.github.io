@@ -2,7 +2,7 @@ backend:
   name: github
   repo: twquanjing/twquanjing.github.io
   branch: main
-  base_url: https://twquanjing-github-io.vercel.app/api
+  base_url: https://twquanjing-github-io.vercel.app  # ⬅️ 確保尾巴沒有 /api 也沒有斜線
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
