@@ -75,7 +75,7 @@
         .btn-review { display: inline-block; background-color: #fff; color: #333; padding: 12px 30px; border-radius: 4px; font-weight: bold; margin-top: 15px; }/* 聯絡資訊列表底層設定（電腦版預設：橫向一整行） */
         .info-list { 
             list-style: none; 
-            max-width: 650px; /* 稍微放大最大寬度，讓地址在桌機版能完整排在一行 */
+            max-width: 800px; /* 稍微放大最大寬度，讓地址在桌機版能完整排在一行 */
             margin: 0 auto; 
             text-align: left; 
             font-size: clamp(0.95rem, 4vw, 1.1rem); 
@@ -103,48 +103,59 @@
         .m-cta-phone { background-color: var(--phone-color); }
         footer { background-color: #1a252f; color: #7f8c8d; text-align: center; padding: 20px; font-size: 0.9rem; }
 
-/* ✨ 手機版 RWD 特效：Icon+標題同一行，內容獨立換行且全置中 */
+/* ✨ 手機版 RWD 特效：只有地址換行，其餘項目維持一行，全數置中 */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
             .nav-cta { display: none; }
             .btn { width: 100%; justify-content: center; }
             .services-grid { grid-template-columns: 1fr; gap: 20px; }
             
-            /* 聯絡資訊手機版外層置中 */
+            /* 聯絡資訊手機版基礎設定 */
             .info-list {
                 text-align: center;
             }
             .info-list li {
-                flex-direction: row;        /* ✨ 關鍵修改：讓清單項目橫向排列 */
-                flex-wrap: wrap;           /* ✨ 關鍵修改：允許內層元素滿了就自動換行 */
-                justify-content: center;   /* ✨ 關鍵修改：讓所有內容水平置中 */
+                display: flex;
+                flex-direction: row;      /* 預設全部項目都橫向並排 */
+                justify-content: center;  /* 整體置中 */
                 align-items: center;
                 gap: 8px;
-                margin-bottom: 25px;
+                margin-bottom: 20px;
+                flex-wrap: wrap;          /* 允許地址滿了自動折行 */
             }
             
-            /* 讓包裹標題與內容的區塊變成滿寬度，以便內容自然掉到下一行 */
+            /* 預設所有項目的內容跟標題並排在同一行 */
             .info-item-content {
                 display: flex;
-                flex-direction: column;    /* ✨ 讓標題與內容上下分開 */
-                align-items: center;       /* ✨ 內容文字垂直置中 */
-                gap: 4px;
-                flex-basis: 100%;          /* 讓內容有單獨換行的彈性 */
-                width: 100%;
+                flex-direction: row;
+                align-items: center;
+                gap: 6px;
             }
             
-            /* 如果您的 HTML 結構中 Icon 是 Li 的直屬子元素，
-               我們用這段語法強行讓它跟<b>標題</b>並排在第一行 */
+            /* 🎯 核心精準控制：只針對「最後一個 li」（也就是公司地址）進行換行調整 */
+            .info-list li:last-child {
+                flex-direction: row;      /* 讓 Icon 與標題保持在第一行 */
+            }
+            
+            /* 🎯 讓最後一個 li 裡面的內容變成垂直排列，逼迫地址內容掉到第二行 */
+            .info-list li:last-child .info-item-content {
+                flex-direction: column;   /* 標題與地址上下分開 */
+                flex-basis: 100%;         /* 撐滿寬度以利換行 */
+                width: 100%;
+                align-items: center;      /* 地址文字居中 */
+                gap: 4px;
+            }
+            
+            /* 讓所有直屬 Icon 穩定與第一行文字對齊 */
             .info-list li > i {
-                margin-top: 0;
                 font-size: 1.2rem;
                 display: inline-block;
-                margin-right: -4px;        /* 縮短與標題粗體字之間的距離 */
+                margin-top: 0;
             }
             
-            /* 調整按鈕在手機版的間距 */
+            /* 調整諮詢專線按鈕在手機版的高度，維持完美置中 */
             .inline-phone-btn {
-                margin-top: 4px;
+                margin-top: 0; 
             }
         }
         @media (min-width: 769px) { .mobile-footer-cta { display: none; } body { padding-bottom: 0; } }
