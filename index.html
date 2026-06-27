@@ -73,19 +73,20 @@
         .review-card { background: rgba(255, 255, 255, 0.08); max-width: 650px; margin: 0 auto 40px; padding: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
         .stars { color: #ff9800; font-size: 1.4rem; margin-bottom: 15px; }
         .btn-review { display: inline-block; background-color: #fff; color: #333; padding: 12px 30px; border-radius: 4px; font-weight: bold; margin-top: 15px; }/* 聯絡資訊列表底層設定（電腦版預設：橫向一整行） */
-/* 聯絡資訊列表底層設定（電腦版：全數置中並排） */
+/* 聯絡資訊列表底層設定（電腦版：全面靠左、橫向一整行結束） */
         .info-list { 
             list-style: none; 
-            max-width: 850px; 
+            width: fit-content; 
+            max-width: 100%;
             margin: 0 auto; 
-            text-align: center; 
+            text-align: left; /* ✨ 修改：桌機文字一律靠左 */
             font-size: clamp(0.95rem, 4vw, 1.1rem); 
         }
         .info-list li { 
             margin-bottom: 20px; 
             display: flex; 
             flex-direction: row;
-            justify-content: center;  /* 桌機整行置中 */
+            justify-content: flex-start;  /* ✨ 修改：桌機整行從最左邊開始排 */
             align-items: center; 
         }
         
@@ -94,21 +95,21 @@
             color: var(--accent-color); 
             font-size: 1.2rem; 
             width: 25px; 
-            text-align: center; 
+            text-align: left; 
             margin-right: 4px;
+            display: inline-block;
         }
         
-        /* 桌機版內容架構：保持橫向一行結束 */
+        /* 桌機版內容架構：保持橫向一行結束，且全部靠左貼齊 */
         .info-item-content { 
             display: flex; 
             flex-direction: row; 
             align-items: center;
             gap: 6px;
             width: 100%;
-            justify-content: center;
+            justify-content: flex-start; /* ✨ 修改：內容與粗體字標題緊緊靠左貼齊 */
         } 
         .inline-phone-btn { background: var(--phone-color); color: white; padding: 5px 15px; border-radius: 4px; font-size: 0.95rem; font-weight: bold; width: fit-content; }
-
         /* 手機版底部固定懸浮聯絡條 */
         .mobile-footer-cta { position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; display: flex; z-index: 9999; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); }
         .m-cta-btn { flex: 1; display: flex; justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 1.1rem; gap: 8px; }
@@ -116,41 +117,47 @@
         .m-cta-phone { background-color: var(--phone-color); }
         footer { background-color: #1a252f; color: #7f8c8d; text-align: center; padding: 20px; font-size: 0.9rem; }
 
-/* ✨ 手機版 RWD 特效：Icon+標題永不分離，僅地址內容獨立換行置中 */
+        /* ✨ 手機版 RWD 特效：全面向左對齊，僅地址內容獨立換行（與截圖完美一致） */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
             .nav-cta { display: none; }
             .btn { width: 100%; justify-content: center; }
             .services-grid { grid-template-columns: 1fr; gap: 20px; }
             
+            /* 讓外層容器限制寬度並置中，但內部文字一律靠左對齊（比照截圖樣式） */
             .info-list {
-                text-align: center;
+                text-align: left;
+                max-width: 90%; /* 讓它在手機螢幕左右留一點安全邊距 */
+                padding-left: 5px;
             }
             .info-list li {
                 display: flex;
                 flex-direction: row;
-                justify-content: center;
-                align-items: center;
+                justify-content: flex-start; /* ✨ 修改：手機版靠左對齊，與負責人、專線對齊 */
+                align-items: flex-start;     /* 頂部對齊，確保地址換行時 Icon 不會歪掉 */
                 margin-bottom: 20px;
             }
             
-            /* 手機版基礎：標題與內容依然維持在同一行 */
+            /* 手機版基礎：標題與內容依然維持在同一行並排 */
             .info-item-content {
                 flex-direction: row;
-                flex-wrap: wrap;       /* 允許有特殊需要的項目向下折行 */
-                justify-content: center;
+                flex-wrap: wrap;             /* 允許內容向下折行 */
+                justify-content: flex-start; /* 靠左對齊 */
+                align-items: center;
                 gap: 6px;
             }
             
-            /* 🎯 終極精準控制：只讓最後一個 li（公司地址）的內容(span)掉到第二行 */
+            /* 🎯 核心修正：只讓最後一個 li（公司地址）的標題與內容強制拆成兩行 */
             .info-list li:last-child .info-item-content b {
-                flex-basis: 100%;      /* 讓「📍 公司地址：」強行霸佔第一行整行，達成置中 */
-                text-align: center;
+                flex-basis: 100%;            /* ✨ 讓「📍 公司地址：」單獨霸佔第一行 */
+                display: flex;
+                align-items: center;
             }
             .info-list li:last-child .info-item-content span {
-                flex-basis: 100%;      /* 讓地址內容也霸佔一整行，自然掉到第二行置中 */
-                text-align: center;
+                flex-basis: 100%;            /* ✨ 讓詳細地址內容掉到第二行 */
                 margin-top: 4px;
+                padding-left: 29px;          /* ✨ 精準對齊：25px(Icon寬)+4px(間距)，讓地址剛好對齊上方的字 */
+                line-height: 1.5;
             }
         }
         @media (min-width: 769px) { .mobile-footer-cta { display: none; } body { padding-bottom: 0; } }
