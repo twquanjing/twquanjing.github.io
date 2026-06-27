@@ -5,6 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>全境工程有限公司 - 網站管理後台</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <style>
+    /* 強行放大後台所有文字與輸入框 */
+    html, body, #nc-root {
+      font-size: 18px !important; /* 全域基礎字體放大 */
+    }
+    
+    /* 放大左側導覽列分類字體 */
+    [class*="SidebarLink"], [class*="CollectionTopHeading"] {
+      font-size: 20px !important;
+      font-weight: bold !important;
+    }
+
+    /* 放大表單填寫區的標題 */
+    [class*="FieldLabel"] {
+      font-size: 19px !important;
+      color: #2c3e50 !important;
+      font-weight: bold !important;
+      margin-bottom: 8px !important;
+    }
+
+    /* 放大輸入框（Input）與文字區域（Textarea）的文字與內距 */
+    input, textarea, select, [class*="ControlPaneContainer"] {
+      font-size: 18px !important;
+      padding: 12px !important;
+      line-height: 1.6 !important;
+      border: 2px solid #bdc3c7 !important; /* 加粗框線，讓長輩看更清 */
+      border-radius: 6px !important;
+    }
+
+    /* 當輸入框被點擊時，框線加深 */
+    input:focus, textarea:focus {
+      border-color: #008099 !important;
+      box-shadow: 0 0 8px rgba(0, 128, 153, 0.2) !important;
+    }
+
+    /* 頂部發布與儲存按鈕加大 */
+    [class*="TopBarContainer"] button, [class*="Toolbar"] button {
+      font-size: 18px !important;
+      padding: 8px 20px !important;
+      font-weight: bold !important;
+    }
+    
+    /* 修正媒體庫照片說明的字體 */
+    [class*="FileCard"] {
+      font-size: 16px !important;
+    }
+  </style>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
@@ -13,7 +61,7 @@
     if (window.CMS) {
       window.CMS.registerLocale('zh_TW', {
         auth: { login: '登入', loggingIn: '登入中...', loginWithNetlifyIdentity: '使用 Netlify Identity 登入', loginWithProviders: '使用其他方式登入' },
-        app: { header: { quickAdd: '快速新增' }, sidebar: { collections: '內容管理', allCollections: '所有分類', search: '搜尋...', settings: '設定' } },
+        app: { header: { quickAdd: '快速新增', logout: '登出' }, sidebar: { collections: '內容管理', allCollections: '所有分類', search: '搜尋...', settings: '設定' } },
         collection: { sidebar: { collections: '分類', search: '搜尋文章...' }, collectionTop: { sortBy: '排序依據', viewAs: '瀏覽視態' }, entries: { emptyCollection: '此分類目前沒有資料', loadingEntries: '正在載入資料...' } },
         editor: { editorToolbar: { publishing: '發布中...', publish: '發布變更', published: '已發布', save: '儲存暫存', saving: '儲存中...' } },
         mediaLibrary: { mediaLibrary: { mediaLibrary: '媒體庫', upload: '上傳新照片', uploading: '上傳中...' } }
@@ -30,25 +78,33 @@
           APIUrl: 'https://calm-tarsier-bd25df.netlify.app/.netlify/identity'
         });
 
-        // 正常狀況下的監聽（如果瀏覽器沒擋，這行會動）
+        // 正常狀況下的登入監聽
         window.netlifyIdentity.on('login', () => {
           window.netlifyIdentity.close();
           window.location.href = 'https://twquanjing.github.io/admin/#/';
         });
 
+        // 正常狀況下的登出監聽
         window.netlifyIdentity.on('logout', () => {
           window.location.href = 'https://twquanjing.github.io/';
         });
 
-        // 🔥【超強補強】當使用者點擊 Google 登入時，啟動定時自動搜身雷達
-        // 每 1.5 秒自動檢查一次使用者的登入狀態，一旦發現後台已經認證成功，強行轉址！
+        // 🔥【超強雙向雷達】每 1.5 秒自動檢查登入與登出狀態，防止轉址被系統攔截
         setInterval(() => {
           const user = window.netlifyIdentity.currentUser();
-          // 如果發現已經拿到登入資料，且網址還卡在沒有 /#/ 的登入頁
-          if (user && (!window.location.hash || window.location.hash === '#')) {
-            console.log("偵測到 Google 登入成功，正在強制引導進入後台...");
+          const currentHash = window.location.hash;
+
+          // 1. 登入雷達：如果發現已經拿到登入資料，且網址還卡在沒有 /#/ 的登入頁，強行引導進入後台
+          if (user && (!currentHash || currentHash === '#')) {
+            console.log("偵測到登入成功，正在強制引導進入後台...");
             window.netlifyIdentity.close();
             window.location.href = 'https://twquanjing.github.io/admin/#/';
+          }
+
+          // 2. 登出雷達：如果網址在後台內（有 /#/），但身分證 token 消失了，代表長輩點了登出，立刻強行退回前台首頁
+          if (!user && currentHash && currentHash.includes('#/')) {
+            console.log("偵測到使用者已登出，正在自動返回前台首頁...");
+            window.location.href = 'https://twquanjing.github.io/';
           }
         }, 1500);
 
