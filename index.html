@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全境工程有限公司 - 台中抓漏防水推薦｜屋頂外牆防水、壁癌根治、結構補強</title>
+    <title>全境工程有限公司 - 全臺抓漏防水推薦｜屋頂外牆防水、壁癌根治、結構補強</title>
     <meta name="description" content="全境工程有限公司由專業徐先生師傅帶領團隊，提供全台及台中地區房屋防水抓漏工程。360達人網好評推薦，立即加LINE拍照或來電免費諮詢！">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -90,6 +90,23 @@
             .nav-cta { display: none; }
             .btn { width: 100%; justify-content: center; }
             .services-grid { grid-template-columns: 1fr; gap: 20px; }
+            
+            /* ✨ 新增：手機版聯絡資訊優化 */
+            .info-list {
+                font-size: 0.95rem; /* 稍微縮小整體字體 */
+            }
+            .info-list li {
+                flex-direction: column; /* 讓標題與內容在極小螢幕時可以上下排列，避免擠壓 */
+                align-items: flex-start;
+                gap: 5px;
+                margin-bottom: 20px;
+            }
+            .inline-phone-btn {
+                display: inline-block;
+                margin-top: 5px;
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
         }
         @media (min-width: 769px) { .mobile-footer-cta { display: none; } body { padding-bottom: 0; } }
     </style>
@@ -109,14 +126,14 @@
     <section class="hero">
         <div style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
             <h1 id="hero-title">全境工程有限公司</h1>
-            <p id="hero-desc">專業團隊・一通電話精準治漏！屋頂外牆防水、結構補強、壁癌徹底根治，給您最安心的施工品質。</p>
+            <p id="hero-desc">三十年防水及抓漏問題處理經驗，秉持最認真且用心的態度，為客戶打造安全又舒適的環境。</p>
             
             <div class="cta-group">
                 <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-line dynamic-line">
-                    <i class="fab fa-line" style="font-size: 1.6rem;"></i> 優先加 LINE 線上拍照估價
+                    <i class="fab fa-line" style="font-size: 1.6rem;"></i> LINE 免費諮詢
                 </a>
                 <a href="#" class="btn btn-phone dynamic-phone">
-                    <i class="fas fa-phone-alt"></i> 點此致電免費諮詢專線
+                    <i class="fas fa-phone-alt"></i> 點此致電免費諮詢
                 </a>
             </div>
 
@@ -171,14 +188,15 @@
         <h2 class="section-title">官方認證・安心信賴</h2>
         <div class="review-card">
             <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"全境工程有限公司在【PRO360達人網】上累積了眾多業主的真實五星好評！我們堅持用實惠的價格、透明的合約，為每位客戶徹底搞定漏水煩惱。"</p>
-            <a href="https://www.pro360.com.tw/service/515934" target="_blank" rel="noopener noreferrer" class="btn-review">👉 點此前往 PRO360 達人網 查看官方認證評價</a>
+            <p id="dynamic-review" style="font-size: 1.1rem; font-style: italic; margin-bottom: 10px;">"正在載入最新業主真實好評..."</p>
+            <span id="review-author" style="color: #ff9800; font-size: 0.9rem; display: block; margin-bottom: 20px;"></span>
+            <a href="https://www.pro360.com.tw/service/515934" target="_blank" rel="noopener noreferrer" class="btn-review">👉 點此前往 PRO360 查看所有 5 星評價</a>
         </div>
 
         <ul class="info-list">
-            <li><i class="fas fa-user"></i> <b>專業負責人：</b> <span id="info-boss">徐先生</span></li>
-            <li><i class="fas fa-phone-alt"></i> <b>諮詢專線：</b> <a href="#" class="inline-phone-btn dynamic-phone"><i class="fas fa-phone-alt"></i> 點此直接撥打專線</a></li>
-            <li><i class="fas fa-envelope"></i> <b>電子信箱：</b> <span id="info-email">tf00589550@gmail.com</span></li>
+            <li><i class="fas fa-user"></i> <b>聯絡人：</b> <span id="info-boss">徐先生</span></li>
+            <li><i class="fas fa-phone-alt"></i> <b>諮詢專線：</b> <a href="#" class="inline-phone-btn dynamic-phone"><i class="fas fa-phone-alt"></i> 點此撥打專線</a></li>
+            <li><i class="fas fa-envelope"></i> <b>電子信箱：</b> <span id="info-email">twquanjing@gmail.com</span></li>
             <li><i class="fas fa-map-marker-alt"></i> <b>公司地址：</b> <span id="info-address">台中市南屯區大墩四街321號B1</span></li>
         </ul>
     </section>
@@ -222,7 +240,7 @@
 
                 // 聯絡資料區
                 if(data.email) document.getElementById('info-email').innerText = data.email;
-                if(data.address) document.getElementById('info-address').innerText = data.address + " (全台皆有團隊服務)";
+                if(data.address) document.getElementById('info-address').innerText = data.address;
                 
                 if(data.line_url) {
                     document.querySelectorAll('.dynamic-line').forEach(el => el.href = data.line_url);
@@ -230,6 +248,13 @@
                 if(data.phone_number) {
                     document.querySelectorAll('.dynamic-phone').forEach(el => el.href = "tel:" + data.phone_number);
                 }
+                // 客戶評論區
+                if(data.latest_review) {
+                    document.getElementById('dynamic-review').innerText = `"${data.latest_review}"`;
+                }
+                if(data.latest_review_author) {
+                    document.getElementById('review-author').innerText = `— 台中 ${data.latest_review_author}`;
+                }                
             }).catch(err => console.log("使用預設基本資料"));
 
         // 2. 終極動態案例撈取（安全防護完全體）
