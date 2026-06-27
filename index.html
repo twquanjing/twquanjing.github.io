@@ -103,34 +103,48 @@
         .m-cta-phone { background-color: var(--phone-color); }
         footer { background-color: #1a252f; color: #7f8c8d; text-align: center; padding: 20px; font-size: 0.9rem; }
 
-/* ✨ 手機版 RWD 特效：全面置中且換行 */
+/* ✨ 手機版 RWD 特效：Icon+標題同一行，內容獨立換行且全置中 */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
             .nav-cta { display: none; }
             .btn { width: 100%; justify-content: center; }
             .services-grid { grid-template-columns: 1fr; gap: 20px; }
             
-            /* 聯絡資訊手機版置中優化 */
+            /* 聯絡資訊手機版外層置中 */
             .info-list {
                 text-align: center;
             }
             .info-list li {
-                flex-direction: column; /* Icon 與內容垂直排列 */
+                flex-direction: row;        /* ✨ 關鍵修改：讓清單項目橫向排列 */
+                flex-wrap: wrap;           /* ✨ 關鍵修改：允許內層元素滿了就自動換行 */
+                justify-content: center;   /* ✨ 關鍵修改：讓所有內容水平置中 */
                 align-items: center;
-                gap: 6px;
+                gap: 8px;
                 margin-bottom: 25px;
             }
             
-            /* ✨ 核心修正：只有在手機版時，標題（粗體）與內容才會垂直換行並置中 */
+            /* 讓包裹標題與內容的區塊變成滿寬度，以便內容自然掉到下一行 */
             .info-item-content {
-                flex-direction: column; 
-                align-items: center; 
+                display: flex;
+                flex-direction: column;    /* ✨ 讓標題與內容上下分開 */
+                align-items: center;       /* ✨ 內容文字垂直置中 */
                 gap: 4px;
+                flex-basis: 100%;          /* 讓內容有單獨換行的彈性 */
+                width: 100%;
             }
             
-            .info-list i {
+            /* 如果您的 HTML 結構中 Icon 是 Li 的直屬子元素，
+               我們用這段語法強行讓它跟<b>標題</b>並排在第一行 */
+            .info-list li > i {
                 margin-top: 0;
-                font-size: 1.5rem; /* 手機版圖示稍微放大 */
+                font-size: 1.2rem;
+                display: inline-block;
+                margin-right: -4px;        /* 縮短與標題粗體字之間的距離 */
+            }
+            
+            /* 調整按鈕在手機版的間距 */
+            .inline-phone-btn {
+                margin-top: 4px;
             }
         }
         @media (min-width: 769px) { .mobile-footer-cta { display: none; } body { padding-bottom: 0; } }
