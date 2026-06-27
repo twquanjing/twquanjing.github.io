@@ -73,10 +73,23 @@
         .review-card { background: rgba(255, 255, 255, 0.08); max-width: 650px; margin: 0 auto 40px; padding: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
         .stars { color: #ff9800; font-size: 1.4rem; margin-bottom: 15px; }
         .btn-review { display: inline-block; background-color: #fff; color: #333; padding: 12px 30px; border-radius: 4px; font-weight: bold; margin-top: 15px; }
-        .info-list { list-style: none; max-width: 500px; margin: 0 auto; text-align: left; font-size: 1.1rem; }
-        .info-list li { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .info-list i { color: var(--accent-color); font-size: 1.3rem; width: 25px; text-align: center; }
-        .inline-phone-btn { background: var(--phone-color); color: white; padding: 5px 15px; border-radius: 4px; font-size: 0.95rem; font-weight: bold; }
+        /* 聯絡資訊列表底層設定 */
+        .info-list { 
+            list-style: none; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            text-align: left; 
+            font-size: clamp(0.95rem, 4vw, 1.1rem); 
+        }
+        .info-list li { 
+            margin-bottom: 20px; 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 12px; 
+        }
+        .info-list i { color: var(--accent-color); font-size: 1.3rem; width: 25px; text-align: center; margin-top: 4px; }
+        .info-item-content { display: flex; flex-direction: column; } /* 讓標題與內容自動換行 */
+        .inline-phone-btn { background: var(--phone-color); color: white; padding: 5px 15px; border-radius: 4px; font-size: 0.95rem; font-weight: bold; width: fit-content; margin-top: 5px; }
 
         /* 手機版底部固定懸浮聯絡條 */
         .mobile-footer-cta { position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; display: flex; z-index: 9999; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); }
@@ -85,27 +98,29 @@
         .m-cta-phone { background-color: var(--phone-color); }
         footer { background-color: #1a252f; color: #7f8c8d; text-align: center; padding: 20px; font-size: 0.9rem; }
 
+        /* ✨ 手機版 RWD 特效：全面置中 */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
             .nav-cta { display: none; }
             .btn { width: 100%; justify-content: center; }
             .services-grid { grid-template-columns: 1fr; gap: 20px; }
             
-            /* ✨ 新增：手機版聯絡資訊優化 */
+            /* 聯絡資訊手機版置中優化 */
             .info-list {
-                font-size: 0.95rem; /* 稍微縮小整體字體 */
+                text-align: center;
             }
             .info-list li {
-                flex-direction: column; /* 讓標題與內容在極小螢幕時可以上下排列，避免擠壓 */
-                align-items: flex-start;
-                gap: 5px;
-                margin-bottom: 20px;
+                flex-direction: column; /* Icon、標題、內容全部變垂直排列 */
+                align-items: center;
+                gap: 6px;
+                margin-bottom: 25px;
             }
-            .inline-phone-btn {
-                display: inline-block;
-                margin-top: 5px;
-                padding: 6px 12px;
-                font-size: 0.9rem;
+            .info-item-content {
+                align-items: center; /* 內容文字置中 */
+            }
+            .info-list i {
+                margin-top: 0;
+                font-size: 1.5rem; /* 手機版圖示稍微放大，更有置中焦點 */
             }
         }
         @media (min-width: 769px) { .mobile-footer-cta { display: none; } body { padding-bottom: 0; } }
