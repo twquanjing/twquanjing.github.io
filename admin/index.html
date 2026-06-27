@@ -69,11 +69,11 @@
     }
   </script>
 
-<script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (window.netlifyIdentity) {
         
-        // 1. 初始化 Netlify Identity 連線
+        // 1. 初始化 Netlify Identity 連線（✨ 核心修正：強制指定跳轉目的地網址）
         window.netlifyIdentity.init({
           APIUrl: 'https://calm-tarsier-bd25df.netlify.app/.netlify/identity'
         });
@@ -83,11 +83,13 @@
           const user = window.netlifyIdentity.currentUser(); // 檢查瀏覽器內是否有登入 Token
           const currentHash = window.location.hash;
 
-          // 【狀態 A】有 Token，但網址還在登入前頁面 ➔ 代表登入成功，立刻引導進後台
-          if (user && (!currentHash || currentHash === '#' || currentHash === '')) {
-            console.log("偵測到成功取得 Token，正在引導進入管理後台...");
+          // 【狀態 A】有 Token，但網址不在 GitHub 後台管理頁（可能卡在登入前，或被誤導去 Netlify 網址）
+          // ✨ 這裡做了補強：只要發現拿到 Token，且目前網址「不是」目標後台網址，就強行轉回 GitHub 後台路徑
+          if (user && window.location.href !== 'https://twquanjing.github.io/admin/#/') {
+            console.log("偵測到成功取得 Token，強制修正路徑，引導進入 GitHub 管理後台...");
             window.netlifyIdentity.close();
             window.location.href = 'https://twquanjing.github.io/admin/#/';
+            return;
           }
         };
 
@@ -102,12 +104,13 @@
           window.location.href = 'https://twquanjing.github.io/';
         });
 
-        // 4. ✨ 防呆雙保險：網頁一打開（或重整時），立刻主動掃描一次 Token 狀態
-        // 這能確保當長輩用 Google 登入、視窗重新導回時，100% 觸發進入後台
+        // 4. 防呆雙保險：網頁一打開（或重整時），立刻主動掃描一次 Token 狀態
         checkAuthAndRedirect();
 
       }
     });
   </script>
+
+  
 </body>
 </html>
