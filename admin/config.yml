@@ -2,7 +2,7 @@ backend:
   name: github
   repo: twquanjing/twquanjing.github.io
   branch: main
-  base_url: https://twquanjing-github-io.vercel.app # ⬅️ 這裡精準換成您的 Vercel 網址
+  base_url: https://twquanjing-github-io.vercel.app
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
