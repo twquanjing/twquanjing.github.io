@@ -20,22 +20,22 @@ collections:
           - { label: "主視覺大標題", name: "hero_title", widget: "string", default: "全境工程有限公司" }
           - { label: "主視覺副標題描述", name: "hero_desc", widget: "text", default: "三十年防水及抓漏問題處理經驗，秉持最認真且用心的態度，給您最安心的施工品質。" }
           
-          # --- ✨ 新增：核心工程服務總標題 ---
+          # --- 核心工程服務總標題 ---
           - { label: "核心工程區塊總標題", name: "services_main_title", widget: "string", default: "核心工程服務" }
           
-          # --- ✨ 新增：核心工程項目 1 ---
+          # --- 核心工程項目 1 ---
           - { label: "項目1-標題", name: "service1_title", widget: "string", default: "專業抓漏止水 & 三大防水" }
           - { label: "項目1-內文描述", name: "service1_desc", widget: "text", default: "深耕屋頂防水、外牆防水、浴室防水等三大核心區域。透過精準儀器與經驗豐富的「抓漏止水」技術，找出滲水根本源頭，徹底阻絕漏水危機。" }
           
-          # --- ✨ 新增：核心工程項目 2 ---
+          # --- 核心工程項目 2 ---
           - { label: "項目2-標題", name: "service2_title", widget: "string", default: "結構整修與專業壁癌處理" }
           - { label: "項目2-內文描述", name: "service2_desc", widget: "text", default: "全境具備專業的壁癌處理工法，全面剷除劣化層、進行殺菌抗鹼整平，並結合结构層修復，還給您乾淨健康的居家牆面，保證不易復發。" }
           
-          # --- ✨ 新增：核心工程項目 3 ---
+          # --- 核心工程項目 3 ---
           - { label: "項目3-標題", name: "service3_title", widget: "string", default: "結構補強 & 高壓灌注打針" }
           - { label: "項目3-內文描述", name: "service3_desc", widget: "text", default: "針對房屋老舊、地震引起的剪力牆裂縫，提供專業結構補強服務。利用高壓灌注（俗稱打針）技術將結構裂縫填滿，強化建築本體剛性。" }
           
-          # --- ✨ 新增：核心工程項目 4 ---
+          # --- 核心工程項目 4 ---
           - { label: "項目4-標題", name: "service4_title", widget: "string", default: "地坪工程 & 磁磚牆壁空鼓處理" }
           - { label: "項目4-內文描述", name: "service4_desc", widget: "text", default: "不只防水，更精通各式地坪工程施作。此外，針對家中地板磁磚隆起、牆面澎拱等現象，提供精準的磁磚空鼓、牆壁空鼓處理。" }
 
@@ -52,13 +52,13 @@ collections:
     delete: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     sortable_fields: ["commit_date"]
-# 找到 cases 的 fields 區塊，修改成如下結構：
-fields:
-  - { label: "案例標題/分類", name: "tag", widget: "string" }
-  - label: "施工照片清單"
-    name: "photos"
-    widget: "list"
-    summary: "{{fields.description}}" # 讓長輩在後台列表一眼看出這張照片的敘述
+    format: "json" # 確保存檔格式為前台讀取所需的 JSON 格式
     fields:
-      - { label: "上傳施工照片", name: "image", widget: "image" }
-      - { label: "這張照片的施工敘述", name: "description", widget: "string" }
+      - { label: "案例標題/分類", name: "tag", widget: "string" }
+      - label: "施工照片清單"
+        name: "photos"
+        widget: "list"
+        summary: "{{fields.description}}"
+        fields:
+          - { label: "上傳施工照片", name: "image", widget: "image" }
+          - { label: "這張照片的施工敘述", name: "description", widget: "string" }
