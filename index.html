@@ -7,6 +7,8 @@
     <meta name="description" content="全境工程有限公司由專業徐先生師傅帶領團隊，提供全台及台中地區房屋防水抓漏工程。360達人網好評推薦，立即加LINE拍照或來電免費諮詢！">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ✨ 業界最頂級滑動套件 Swiper.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
     <style>
@@ -60,37 +62,49 @@
         .service-card h3 { margin-bottom: 12px; color: var(--dark-color); font-size: 1.4rem; }
         .service-card p { font-size: 0.95rem; color: #555; text-align: justify; }
 
-        /* 施工案例區塊 */
+        /* ✨ 施工案例區塊（升級為專案滑動卡片架構） */
         .gallery { background-color: var(--light-color); }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .gallery-item { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: center; }
-        .gallery-item img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 10px; }
-        .gallery-tag { display: inline-block; background: var(--secondary-color); color: white; padding: 2px 10px; font-size: 0.8rem; border-radius: 3px; font-weight: bold; margin-bottom: 5px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .project-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); display: flex; flex-direction: column; overflow: hidden; }
+        .project-card-header { margin-bottom: 15px; text-align: left; }
+        .gallery-tag { display: inline-block; background: var(--secondary-color); color: white; padding: 3px 12px; font-size: 0.8rem; border-radius: 4px; font-weight: bold; margin-bottom: 8px; }
+        .project-title { font-size: 1.2rem; font-weight: bold; color: var(--dark-color); }
+        
+        /* Swiper 專屬高訂外觀縮放 */
+        .swiper { width: 100%; height: 240px; border-radius: 8px; margin-bottom: 10px; }
+        .swiper-slide { position: relative; background: #000; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 浮動施工敘述文字：蓋在照片底部 */
+        .slide-desc { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.85)); color: white; padding: 25px 15px 12px; font-size: 0.95rem; text-align: left; font-weight: 500; }
+        
+        /* 自訂 Swiper 導覽按鈕與分頁點樣式顏色 */
+        .swiper-button-next, .swiper-button-prev { color: white !important; transform: scale(0.6); background: rgba(0,0,0,0.3); width: 50px; height: 50px; border-radius: 50px; }
+        .swiper-pagination-bullet-active { background: var(--accent-color) !important; }
 
         /* 聯絡資訊與 PRO360 評價區塊 */
         .contact-info { background-color: var(--dark-color); color: white; text-align: center; }
         .contact-info .section-title { color: white; }
         .review-card { background: rgba(255, 255, 255, 0.08); max-width: 650px; margin: 0 auto 40px; padding: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
         .stars { color: #ff9800; font-size: 1.4rem; margin-bottom: 15px; }
-        .btn-review { display: inline-block; background-color: #fff; color: #333; padding: 12px 30px; border-radius: 4px; font-weight: bold; margin-top: 15px; }/* 聯絡資訊列表底層設定（電腦版預設：橫向一整行） */
-/* 聯絡資訊列表底層設定（電腦版：全面靠左、橫向一整行結束） */
+        .btn-review { display: inline-block; background-color: #fff; color: #333; padding: 12px 30px; border-radius: 4px; font-weight: bold; margin-top: 15px; }
+        
         .info-list { 
             list-style: none; 
             width: fit-content; 
             max-width: 100%;
             margin: 0 auto; 
-            text-align: left; /* ✨ 修改：桌機文字一律靠左 */
+            text-align: left; 
             font-size: clamp(0.95rem, 4vw, 1.1rem); 
         }
         .info-list li { 
             margin-bottom: 20px; 
             display: flex; 
             flex-direction: row;
-            justify-content: flex-start;  /* ✨ 修改：桌機整行從最左邊開始排 */
+            justify-content: flex-start; 
             align-items: center; 
         }
         
-        /* 標題內部的 Icon 樣式修正 */
         .info-item-content b i { 
             color: var(--accent-color); 
             font-size: 1.2rem; 
@@ -100,16 +114,16 @@
             display: inline-block;
         }
         
-        /* 桌機版內容架構：保持橫向一行結束，且全部靠左貼齊 */
         .info-item-content { 
             display: flex; 
             flex-direction: row; 
             align-items: center;
             gap: 6px;
             width: 100%;
-            justify-content: flex-start; /* ✨ 修改：內容與粗體字標題緊緊靠左貼齊 */
+            justify-content: flex-start; 
         } 
         .inline-phone-btn { background: var(--phone-color); color: white; padding: 5px 15px; border-radius: 4px; font-size: 0.95rem; font-weight: bold; width: fit-content; }
+        
         /* 手機版底部固定懸浮聯絡條 */
         .mobile-footer-cta { position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; display: flex; z-index: 9999; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); }
         .m-cta-btn { flex: 1; display: flex; justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 1.1rem; gap: 8px; }
@@ -117,38 +131,34 @@
         .m-cta-phone { background-color: var(--phone-color); }
         footer { background-color: #1a252f; color: #7f8c8d; text-align: center; padding: 20px; font-size: 0.9rem; }
 
-        /* ✨ 手機版 RWD 特效：全面向左對齊，僅地址內容獨立換行（與截圖完美一致） */
+        /* 手機版 RWD 特效 */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
             .nav-cta { display: none; }
             .btn { width: 100%; justify-content: center; }
             .services-grid { grid-template-columns: 1fr; gap: 20px; }
             
-            /* 讓外層容器限制寬度並置中，但內部文字一律靠左對齊（比照截圖樣式） */
             .info-list {
                 text-align: left;
-                max-width: 90%; /* 讓它在手機螢幕左右留一點安全邊距 */
+                max-width: 90%; 
                 padding-left: 5px;
             }
             .info-list li {
                 display: flex;
                 flex-direction: row;
-                justify-content: flex-start; /* ✨ 修改：手機版靠左對齊，與負責人、專線對齊 */
-                align-items: flex-start;     /* 頂部對齊，確保地址換行時 Icon 不會歪掉 */
+                justify-content: flex-start; 
+                align-items: flex-start;     
                 margin-bottom: 20px;
             }
             
-            /* 手機版基礎：標題與內容依然維持在同一行並排 */
             .info-item-content {
                 flex-direction: row;
-                flex-wrap: wrap;             /* 允許內容向下折行 */
-                justify-content: flex-start; /* 靠左對齊 */
+                flex-wrap: wrap;             
+                justify-content: flex-start; 
                 align-items: center;
                 gap: 6px;
             }
             
-            /* 🎯 核心修正：只讓最後一個 li（公司地址）的標題與內容強制拆成兩行 */
-                
             .info-list li:nth-last-child(-n+2) .info-item-content b {
                 flex-basis: 100%;          
                 display: flex;
@@ -156,9 +166,9 @@
             }
             
             .info-list li:nth-last-child(-n+2) .info-item-content span {
-                flex-basis: 100%;            /* ✨ 讓詳細地址內容掉到第二行 */
+                flex-basis: 100%;            
                 margin-top: 4px;
-                padding-left: 29px;          /* ✨ 精準對齊：25px(Icon寬)+4px(間距)，讓地址剛好對齊上方的字 */
+                padding-left: 29px;          
                 line-height: 1.5;
             } 
         }
@@ -172,7 +182,7 @@
             <div class="logo">🏠 全境工程有限公司</div>
             <div class="nav-cta">
                 <a href="#" target="_blank" rel="noopener noreferrer" class="nav-line dynamic-line"><i class="fab fa-line"></i> 加 LINE 免費諮詢</a>
-                <a href="javascript:void(0);" class="nav-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 免費諮詢專線</a>
+                <a href="#" class="nav-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 免費諮詢專線</a>
             </div>
         </div>
     </header>
@@ -238,7 +248,7 @@
         </div>
     </section>
 
-   <section class="container contact-info" style="max-width: 100%; padding: 60px 20px;">
+    <section class="container contact-info" style="max-width: 100%; padding: 60px 20px;">
         <h2 class="section-title">官方認證・安心信賴</h2>
         
         <div class="review-card">
@@ -247,7 +257,7 @@
             <span id="review-author" style="color: #ff9800; font-size: 0.9rem; display: block; margin-bottom: 20px;"></span>
             <a href="https://www.pro360.com.tw/service/515934" target="_blank" rel="noopener noreferrer" class="btn-review">👉 點此前往 PRO360 查看所有 5 星評價</a>
         </div> 
-       <ul class="info-list">
+        <ul class="info-list">
             <li>
                 <div class="info-item-content">
                     <b><i class="fas fa-user"></i> 專案聯絡人：</b> <span id="info-boss">徐先生</span>
@@ -292,16 +302,17 @@
         <a href="#" class="m-cta-btn m-cta-phone dynamic-phone"><i class="fas fa-phone-alt"></i> 點此致電徐先生</a>
     </div>
 
+    <!-- ✨ 引入 Swiper.js 的引擎腳本 -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <script>
         // 1. 讀取並渲染基本聯絡資訊 + 核心工程服務欄位
         fetch('/data/settings.json')
             .then(res => res.json())
             .then(data => {
-                // 主視覺區
                 if(data.hero_title) document.getElementById('hero-title').innerText = data.hero_title;
                 if(data.hero_desc) document.getElementById('hero-desc').innerText = data.hero_desc;
                 
-                // 動態替換核心工程的總標題與四大卡片項目
                 if(data.services_main_title) {
                     const titleEl = document.querySelector('.container .section-title');
                     if(titleEl) titleEl.innerText = data.services_main_title;
@@ -311,42 +322,24 @@
                 if(cards.length >= 4) {
                     if(data.service1_title) cards[0].querySelector('h3').innerText = data.service1_title;
                     if(data.service1_desc) cards[0].querySelector('p').innerHTML = data.service1_desc;
-                    
                     if(data.service2_title) cards[1].querySelector('h3').innerText = data.service2_title;
                     if(data.service2_desc) cards[1].querySelector('p').innerHTML = data.service2_desc;
-                    
                     if(data.service3_title) cards[2].querySelector('h3').innerText = data.service3_title;
                     if(data.service3_desc) cards[2].querySelector('p').innerHTML = data.service3_desc;
-                    
                     if(data.service4_title) cards[3].querySelector('h3').innerText = data.service4_title;
                     if(data.service4_desc) cards[3].querySelector('p').innerHTML = data.service4_desc;
                 }
-    
-                // 聯絡資料區
+
                 if(data.email) document.getElementById('info-email').innerText = data.email;
                 if(data.address) document.getElementById('info-address').innerText = data.address;
-                
-                if(data.tax_id && document.getElementById('info-tax-id')) {
-                    document.getElementById('info-tax-id').innerText = data.tax_id;
-                }
-                
-                if(data.line_url) {
-                    document.querySelectorAll('.dynamic-line').forEach(el => el.href = data.line_url);
-                }
-                if(data.phone_number) {
-                    document.querySelectorAll('.dynamic-phone').forEach(el => el.href = "tel:" + data.phone_number);
-                }
-                
-                // 客戶評論區
-                if(data.latest_review) {
-                    document.getElementById('dynamic-review').innerText = `"${data.latest_review}"`;
-                }
-                if(data.latest_review_author) {
-                    document.getElementById('review-author').innerText = `— 台中 ${data.latest_review_author}`;
-                }                
+                if(data.tax_id && document.getElementById('info-tax-id')) document.getElementById('info-tax-id').innerText = data.tax_id;
+                if(data.line_url) document.querySelectorAll('.dynamic-line').forEach(el => el.href = data.line_url);
+                if(data.phone_number) document.querySelectorAll('.dynamic-phone').forEach(el => el.href = "tel:" + data.phone_number);
+                if(data.latest_review) document.getElementById('dynamic-review').innerText = `"${data.latest_review}"`;
+                if(data.latest_review_author) document.getElementById('review-author').innerText = `— 台中 ${data.latest_review_author}`;
             }).catch(err => console.log("使用預設基本資料或 JSON 解析失敗"));
-    
-        // 2. 終極動態案例撈取（安全防護完全體）
+
+        // 2. 終極動態案例撈取（Swiper 滑動升級完全體）
         fetch('https://api.github.com/repos/twquanjing/twquanjing.github.io/contents/data/cases')
             .then(res => {
                 if (!res.ok) throw new Error('尚未建立案例資料夾');
@@ -361,47 +354,83 @@
                     return;
                 }
                 
-                container.innerHTML = ''; // 確定有檔案，清空「載入中」字樣
-    
+                container.innerHTML = ''; 
+
+                // 用來計算總共有幾個 Swiper 需要初始化
+                let swiperIndex = 0;
+
                 files.forEach(file => {
                     if (file.name.endsWith('.json')) {
+                        swiperIndex++;
+                        const currentSwiperId = `swiper-project-${swiperIndex}`;
+
                         fetch(file.download_url)
                             .then(res => res.json())
                             .then(caseData => {
                                 const tag = caseData.tag || '工程實績';
+                                const projectTitle = caseData.title || '精選防水抓漏專案';
                                 
-                                // ✨ 智慧多圖迴圈渲染
+                                // 建立整個專案大卡片
+                                const projectCard = document.createElement('div');
+                                projectCard.className = 'project-card';
+
+                                // 生成內部所有幻燈片照片的 HTML
+                                let slidesHtml = '';
+
                                 if (caseData.photos && Array.isArray(caseData.photos)) {
                                     caseData.photos.forEach(item => {
                                         if (item.image) {
-                                            const card = document.createElement('div');
-                                            card.className = 'gallery-item';
-                                            card.innerHTML = `
-                                                <span class="gallery-tag">${tag}</span>
-                                                <img src="${item.image}" alt="${item.description || tag}" onerror="this.src='https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=600&q=80'">
-                                                <p style="margin-top: 10px; font-weight: bold; color: #333;">${item.description || ''}</p>
+                                            slidesHtml += `
+                                                <div class="swiper-slide">
+                                                    <img src="${item.image}" alt="${projectTitle}" loading="lazy">
+                                                    <div class="slide-desc">${item.description || '施工紀錄'}</div>
+                                                </div>
                                             `;
-                                            container.appendChild(card);
                                         }
                                     });
                                 } else if (caseData.image) {
-                                    // 舊案例相容備援機制
-                                    const card = document.createElement('div');
-                                    card.className = 'gallery-item';
-                                    card.innerHTML = `
-                                        <span class="gallery-tag">${tag}</span>
-                                        <img src="${caseData.image}" alt="${caseData.description || tag}">
-                                        <p style="margin-top: 10px; font-weight: bold; color: #333;">${caseData.description || ''}</p>
+                                    // 舊案例相容備援（只有單張照片時依然能跑）
+                                    slidesHtml += `
+                                        <div class="swiper-slide">
+                                            <img src="${caseData.image}" alt="${projectTitle}">
+                                            <div class="slide-desc">${caseData.description || '施工紀錄'}</div>
+                                        </div>
                                     `;
-                                    container.appendChild(card);
                                 }
+
+                                // 拼裝出完整的 Swiper 超炫組件卡片
+                                projectCard.innerHTML = `
+                                    <div class="project-card-header">
+                                        <span class="gallery-tag">${tag}</span>
+                                        <div class="project-title">${projectTitle}</div>
+                                    </div>
+                                    <div class="swiper ${currentSwiperId}">
+                                        <div class="swiper-wrapper">
+                                            ${slidesHtml}
+                                        </div>
+                                        <!-- 分頁小圓點 -->
+                                        <div class="swiper-pagination"></div>
+                                        <!-- 左右前進後退按鈕 -->
+                                        <div class="swiper-button-prev"></div>
+                                        <div class="swiper-button-next"></div>
+                                    </div>
+                                `;
+
+                                container.appendChild(projectCard);
+
+                                // ✨ 動態初始化這個專案卡片的滑動功能
+                                new Swiper(`.${currentSwiperId}`, {
+                                    loop: false, // 只有一張時不循環
+                                    pagination: { el: '.swiper-pagination', clickable: true },
+                                    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                                    nested: true, // 防止與手機全域手勢衝突
+                                });
                             })
                             .catch(err => console.log("單一案例解析失敗:", err));
                     }
-                }); // ✨ 修正：補上 files.forEach 的閉合括號
+                });
                 
             }).catch(err => {
-                // ✨ 核心修正：加入安全檢查，確保容器存在才塞入文字
                 console.log("撈取提示:", err.message);
                 const container = document.getElementById('cases-container');
                 if (container) {
