@@ -2,7 +2,7 @@ backend:
   name: github
   repo: twquanjing/twquanjing.github.io
   branch: main
-  base_url: https://twquanjing-github-io.vercel.app
+  base_url: https://twquanjing-github-io.vercel.app/api
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
