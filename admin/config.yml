@@ -18,7 +18,7 @@ collections:
         fields:
           # --- 原本的主視覺區塊 ---
           - { label: "主視覺大標題", name: "hero_title", widget: "string", default: "全境工程有限公司" }
-          - { label: "主視覺副標題描述", name: "hero_desc", widget: "text", default: "【徐先生專業團隊】全台服務・一通電話精準治漏！屋頂外牆防水、結構補強、壁癌徹底根治，給您最安心的施工品質。" }
+          - { label: "主視覺副標題描述", name: "hero_desc", widget: "text", default: "三十年防水及抓漏問題處理經驗，秉持最認真且用心的態度，給您最安心的施工品質。" }
           
           # --- ✨ 新增：核心工程服務總標題 ---
           - { label: "核心工程區塊總標題", name: "services_main_title", widget: "string", default: "核心工程服務" }
@@ -40,9 +40,9 @@ collections:
           - { label: "項目4-內文描述", name: "service4_desc", widget: "text", default: "不只防水，更精通各式地坪工程施作。此外，針對家中地板磁磚隆起、牆面澎拱等現象，提供精準的磁磚空鼓、牆壁空鼓處理。" }
 
           # --- 原本的聯絡資訊區塊 ---
-          - { label: "LINE官方帳號好友連結", name: "line_url", widget: "string", default: "https://line.me/ti/p/..." }
+          - { label: "LINE官方帳號好友連結", name: "line_url", widget: "string", default: "https://line.me/ti/p/uacba-bIJI" }
           - { label: "徐先生手機號碼(按鈕直撥用)", name: "phone_number", widget: "string", default: "0983182188" }
-          - { label: "電子信箱", name: "email", widget: "string", default: "tf00589550@gmail.com" }
+          - { label: "電子信箱", name: "email", widget: "string", default: "twquanjing@gmail.com" }
           - { label: "總公司地址", name: "address", widget: "string", default: "台中市南屯區大墩四街321號B1" }
 
   - name: "cases"
